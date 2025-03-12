@@ -1,3 +1,4 @@
+using InventorySystem.Core.DomainModels;
 using InventorySystem.Data.Items;
 
 namespace InventorySystem.Core.Interfaces
@@ -7,14 +8,17 @@ namespace InventorySystem.Core.Interfaces
 		void AddItem(BaseItem item);
 		void RemoveItem(BaseItem item);
 
-		bool CanEquipItem(BaseItem item, string slotId);
+		//bool CanEquipItem(BaseItem item, string slotId);
 
-		void EquipItem(BaseItem item, string slotId);
-		void UnequipItem(string slotId);
+		void EquipItem(BaseItem item, string slotId, int subSlotIndex);
+		void UnequipItem(string slotId, int subSlotIndex);
 
 		// Query methods
-		bool IsEquipped(string slotId);
-		BaseItem GetEquippedItem(string slotId);
+		//bool IsEquipped(string slotId);
+		//BaseItem GetEquippedItem(string slotId);
 		BaseItem[] GetAllItems();
+
+		// For UI to see what's currently equipped
+		InventorySlot GetSlot(string slotId);
 	}
 }

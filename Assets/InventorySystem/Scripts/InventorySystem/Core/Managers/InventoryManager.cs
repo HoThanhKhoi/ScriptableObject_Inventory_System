@@ -12,7 +12,7 @@ namespace InventorySystem.Core.Managers
 	{
 		private readonly IEventBus _eventBus;
 		private readonly Dictionary<string, InventorySlot> _equippedSlots;
-		private readonly List<BaseItem> _inventoryItems;
+		private readonly List<BaseItem> _allItems;
 		private readonly IEquipmentSlotService _slotService; // We need this to get capacity, etc.
 
 		public InventoryManager(IEventBus eventBus, IEquipmentSlotService slotService)
@@ -20,13 +20,13 @@ namespace InventorySystem.Core.Managers
 			_eventBus = eventBus;
 			_slotService = slotService;
 			_equippedSlots = new Dictionary<string, InventorySlot>();
-			_inventoryItems = new List<BaseItem>();
+			_allItems = new List<BaseItem>();
 		}
 
 		public void AddItem(BaseItem item)
 		{
 			if (item == null) return;
-			_inventoryItems.Add(item);
+			_allItems.Add(item);
 			_eventBus.Publish(new ItemAddedEvent { Item = item });
 			_eventBus.Publish(new InventoryUpdatedEvent());
 		}
@@ -34,7 +34,7 @@ namespace InventorySystem.Core.Managers
 		public void RemoveItem(BaseItem item)
 		{
 			if (item == null) return;
-			if (_inventoryItems.Remove(item))
+			if (_allItems.Remove(item))
 			{
 				// If it was equipped, remove it
 				foreach (var slot in _equippedSlots.Values)
@@ -50,21 +50,15 @@ namespace InventorySystem.Core.Managers
 			}
 		}
 
-		public bool CanEquipItem(BaseItem item, string slotId)
-		{
-			// Basic check: if item category is allowed
-			if (item == null) return false;
-			return _slotService.IsItemAllowedInSlot(item.Category, slotId);
-		}
-
 		// Overload for multi-sub-slot
 		public void EquipItem(BaseItem item, string slotId, int subSlotIndex)
 		{
-			if (!CanEquipItem(item, slotId)) return;
-
+			//if (!CanEquipItem(item, slotId)) return;
+			
 			var slot = GetOrCreateSlot(slotId);
-			int capacity = _slotService.GetCapacity(slotId);
 
+			// Ensure subSlotIndex is valid
+			int capacity = _slotService.GetCapacity(slotId);
 			// If subSlotIndex is out of range, we clamp it
 			if (subSlotIndex < 0) subSlotIndex = 0;
 			if (subSlotIndex >= capacity) subSlotIndex = capacity - 1;
@@ -90,12 +84,6 @@ namespace InventorySystem.Core.Managers
 			_eventBus.Publish(new InventoryUpdatedEvent());
 		}
 
-		// 2-parameter version for old code
-		public void EquipItem(BaseItem item, string slotId)
-		{
-			EquipItem(item, slotId, 0);
-		}
-
 		public void UnequipItem(string slotId, int subSlotIndex)
 		{
 			var slot = GetSlot(slotId);
@@ -103,46 +91,23 @@ namespace InventorySystem.Core.Managers
 
 			if (subSlotIndex < 0 || subSlotIndex >= slot.EquippedItems.Count) return;
 
-			var removedItem = slot.EquippedItems[subSlotIndex];
-			if (removedItem == null) return;
+			var oldItem = slot.EquippedItems[subSlotIndex];
+			if (oldItem == null) return;
 
 			slot.EquippedItems[subSlotIndex] = null;
-			_eventBus.Publish(new ItemUnequippedEvent { Item = removedItem, SlotId = slotId });
+			_eventBus.Publish(new ItemUnequippedEvent { Item = oldItem, SlotId = slotId });
 			_eventBus.Publish(new InventoryUpdatedEvent());
-		}
-
-		public void UnequipItem(string slotId)
-		{
-			// If you call the old version, we remove sub-slot 0
-			UnequipItem(slotId, 0);
-		}
-
-		public bool IsEquipped(string slotId)
-		{
-			var slot = GetSlot(slotId);
-			if (slot == null) return false;
-			// If any sub-slot has an item, consider it "equipped"
-			foreach (var it in slot.EquippedItems)
-			{
-				if (it != null) return true;
-			}
-			return false;
-		}
-
-		public BaseItem GetEquippedItem(string slotId)
-		{
-			// This old method returns the first item if multi-sub-slot
-			var slot = GetSlot(slotId);
-			if (slot != null && slot.EquippedItems.Count > 0)
-			{
-				return slot.EquippedItems[0];
-			}
-			return null;
 		}
 
 		public BaseItem[] GetAllItems()
 		{
-			return _inventoryItems.ToArray();
+			return _allItems.ToArray();
+		}
+
+		public InventorySlot GetSlot(string slotId)
+		{
+			_equippedSlots.TryGetValue(slotId, out var slot);
+			return slot;
 		}
 
 		// Helper
@@ -150,16 +115,41 @@ namespace InventorySystem.Core.Managers
 		{
 			if (!_equippedSlots.TryGetValue(slotId, out var slot))
 			{
-				slot = new InventorySlot(slotId, true);
+				slot = new InventorySlot(slotId);
 				_equippedSlots[slotId] = slot;
 			}
 			return slot;
 		}
 
-		private InventorySlot GetSlot(string slotId)
-		{
-			_equippedSlots.TryGetValue(slotId, out var slot);
-			return slot;
-		}
+		//public bool IsEquipped(string slotId)
+		//{
+		//	var slot = GetSlot(slotId);
+		//	if (slot == null) return false;
+		//	// If any sub-slot has an item, consider it "equipped"
+		//	foreach (var it in slot.EquippedItems)
+		//	{
+		//		if (it != null) return true;
+		//	}
+		//	return false;
+		//}
+
+		//public BaseItem GetEquippedItem(string slotId)
+		//{
+		//	// This old method returns the first item if multi-sub-slot
+		//	var slot = GetSlot(slotId);
+		//	if (slot != null && slot.EquippedItems.Count > 0)
+		//	{
+		//		return slot.EquippedItems[0];
+		//	}
+		//	return null;
+		//}
+
+		//public bool CanEquipItem(BaseItem item, string slotId)
+		//{
+		//	// Basic check: if item category is allowed
+		//	if (item == null) return false;
+		//	return _slotService.IsItemAllowedInSlot(item.Category, slotId);
+		//}
+
 	}
 }

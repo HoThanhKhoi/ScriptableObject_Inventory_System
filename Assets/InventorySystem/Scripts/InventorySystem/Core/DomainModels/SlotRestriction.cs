@@ -8,11 +8,13 @@ namespace InventorySystem.Core.DomainModels
 	{
 		public string SlotId { get; private set; }
 		public List<ItemCategory> AllowedCategories { get; private set; }
+		public int Capacity { get; }
 
-		public SlotRestriction(string slotId, List<ItemCategory> allowedCategories)
+		public SlotRestriction(string slotId, List<ItemCategory> allowedCategories, int capacity)
 		{
 			SlotId = slotId;
 			AllowedCategories = allowedCategories;
+			Capacity = capacity;
 		}
 	}
 }

@@ -7,14 +7,14 @@ namespace InventorySystem.Core.DomainModels
 	public class InventorySlot
 	{
 		public string SlotId { get; private set; }
-		public bool IsEquippedSlot { get; private set; } // e.g., is it a gear slot?
+		//public bool IsEquippedSlot { get; private set; }
 
 		public List<BaseItem> EquippedItems { get; private set; }
 
-		public InventorySlot(string slotId, bool isEquippedSlot)
+		public InventorySlot(string slotId)
 		{
 			SlotId = slotId;
-			IsEquippedSlot = isEquippedSlot;
+			//IsEquippedSlot = isEquippedSlot;
 
 			EquippedItems = new List<BaseItem>();
 		}

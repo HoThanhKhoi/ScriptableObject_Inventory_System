@@ -12,13 +12,13 @@ namespace InventorySystem.Core.Managers
 		private Dictionary<string, SlotRestriction> _slotRestrictions;
 
 		// Add capacity dictionary
-		private Dictionary<string, int> _slotCapacities;
+		//private Dictionary<string, int> _slotCapacities;
 
 
 		public EquipmentSlotManager()
 		{
 			_slotRestrictions = new Dictionary<string, SlotRestriction>();
-			_slotCapacities = new Dictionary<string, int>();
+			//_slotCapacities = new Dictionary<string, int>();
 
 			RegisterSlot("weaponSlot", new List<ItemCategory> { ItemCategory.Weapon }, 1);
 			RegisterSlot("skillGroup1Slot", new List<ItemCategory> { ItemCategory.SkillGroup1 }, 2);
@@ -46,8 +46,22 @@ namespace InventorySystem.Core.Managers
 
 		public void RegisterSlot(string slotId, List<ItemCategory> allowedCategories, int capacity)
 		{
-			_slotCapacities[slotId] = capacity;
-			_slotRestrictions[slotId] = new SlotRestriction(slotId, allowedCategories);
+			//_slotCapacities[slotId] = capacity;
+			_slotRestrictions[slotId] = new SlotRestriction(slotId, allowedCategories, capacity);
+		}
+
+
+		public SlotRestriction GetRestriction(string slotId)
+		{
+			_slotRestrictions.TryGetValue(slotId, out var restriction);
+			return restriction;
+		}
+
+		public int GetCapacity(string slotId)
+		{
+			if (_slotRestrictions.TryGetValue(slotId, out var restriction)) 
+				return restriction.Capacity;
+			return 1; // default
 		}
 
 		public bool IsItemAllowedInSlot(ItemCategory category, string slotId)
@@ -59,17 +73,13 @@ namespace InventorySystem.Core.Managers
 			return false;
 		}
 
-		public SlotRestriction GetRestriction(string slotId)
+		public List<ItemCategory> GetAllowedCategories(string slotId)
 		{
-			_slotRestrictions.TryGetValue(slotId, out var restriction);
-			return restriction;
-		}
-
-		public int GetCapacity(string slotId)
-		{
-			if (_slotCapacities.TryGetValue(slotId, out var cap)) 
-				return cap;
-			return 1; // default
+			if (_slotRestrictions.TryGetValue(slotId, out var restriction))
+			{
+				return restriction.AllowedCategories;
+			}
+			return new List<ItemCategory>();
 		}
 	}
 }
