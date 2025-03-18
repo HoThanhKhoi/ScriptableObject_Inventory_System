@@ -15,14 +15,14 @@ namespace InventorySystem.Infrastructure.DI
 		protected override void Configure(IContainerBuilder builder)
 		{
 			Debug.Log("ProjectInstaller: Configure is running!");
-			
+
 			// Register EventBus as a singleton
 			builder.Register<EventBus>(Lifetime.Singleton)
 				   .As<IEventBus>();
 
 			// Register InventoryManager as IInventoryService
-			builder.Register<InventoryManager>(Lifetime.Singleton)
-				   .As<IInventoryService>();
+			//builder.Register<InventoryManager>(Lifetime.Singleton)
+				   //.As<IInventoryService>();
 
 			// Register EquipmentSlotManager as IEquipmentSlotService
 			builder.Register<EquipmentSlotManager>(Lifetime.Singleton)
@@ -32,10 +32,15 @@ namespace InventorySystem.Infrastructure.DI
 			builder.Register<FilterManager>(Lifetime.Singleton)
 				   .As<IFilterService>();
 
-			builder.RegisterComponentInHierarchy<InventoryMainView>();
-			builder.RegisterComponentInHierarchy<InventoryLeftPanelView>();
-			builder.RegisterComponentInHierarchy<ItemDescriptionPanelView>();
-			builder.RegisterComponentInHierarchy<InventoryAutoPopulator>();
+			builder.RegisterComponentInHierarchy<InventoryView>();
+			builder.RegisterComponentInHierarchy<SlotView>();
+			builder.RegisterComponentInHierarchy<EquipmentSubSlotView>();
+			//builder.RegisterComponentInHierarchy<>();
+
+			//builder.RegisterComponentInHierarchy<InventoryMainView>();
+			//builder.RegisterComponentInHierarchy<InventoryLeftPanelView>();
+			//builder.RegisterComponentInHierarchy<ItemDescriptionPanelView>();
+			//builder.RegisterComponentInHierarchy<InventoryAutoPopulator>();
 
 			//builder.RegisterComponentInHierarchy<InventoryTester>();
 			//builder.RegisterComponentInHierarchy<EquippableInventoryScrollView>();

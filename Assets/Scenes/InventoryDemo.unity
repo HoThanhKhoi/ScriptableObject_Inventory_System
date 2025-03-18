@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 130090029}
   - component: {fileID: 130090028}
   - component: {fileID: 130090027}
-  - component: {fileID: 130090026}
   m_Layer: 5
   m_Name: DragonSlotButton
   m_TagString: Untagged
@@ -159,20 +158,6 @@ RectTransform:
   m_AnchoredPosition: {x: 325, y: 200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &130090026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 130090024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 130090028}
-  _slotButton: {fileID: 130090027}
 --- !u!114 &130090027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +252,6 @@ GameObject:
   - component: {fileID: 206690610}
   - component: {fileID: 206690609}
   - component: {fileID: 206690608}
-  - component: {fileID: 206690607}
   m_Layer: 5
   m_Name: DogSlotButton
   m_TagString: Untagged
@@ -295,20 +279,6 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: 325}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &206690607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 206690605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 206690609}
-  _slotButton: {fileID: 206690608}
 --- !u!114 &206690608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +373,6 @@ GameObject:
   - component: {fileID: 244107047}
   - component: {fileID: 244107046}
   - component: {fileID: 244107045}
-  - component: {fileID: 244107044}
   m_Layer: 5
   m_Name: PigSlotButton
   m_TagString: Untagged
@@ -431,20 +400,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 400}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &244107044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 244107042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 244107046}
-  _slotButton: {fileID: 244107045}
 --- !u!114 &244107045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1839,7 +1794,6 @@ GameObject:
   - component: {fileID: 673048349}
   - component: {fileID: 673048348}
   - component: {fileID: 673048347}
-  - component: {fileID: 673048346}
   m_Layer: 5
   m_Name: GoatSlotButton
   m_TagString: Untagged
@@ -1867,20 +1821,6 @@ RectTransform:
   m_AnchoredPosition: {x: -325, y: -200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &673048346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 673048344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 673048348}
-  _slotButton: {fileID: 673048347}
 --- !u!114 &673048347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2322,7 +2262,6 @@ GameObject:
   - component: {fileID: 722641544}
   - component: {fileID: 722641543}
   - component: {fileID: 722641542}
-  - component: {fileID: 722641541}
   m_Layer: 5
   m_Name: MonkeySlotButton
   m_TagString: Untagged
@@ -2350,20 +2289,6 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: -325}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &722641541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722641539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 722641543}
-  _slotButton: {fileID: 722641542}
 --- !u!114 &722641542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2458,7 +2383,6 @@ GameObject:
   - component: {fileID: 784747829}
   - component: {fileID: 784747828}
   - component: {fileID: 784747827}
-  - component: {fileID: 784747826}
   m_Layer: 5
   m_Name: RoosterSlotButton
   m_TagString: Untagged
@@ -2486,20 +2410,6 @@ RectTransform:
   m_AnchoredPosition: {x: -325, y: 200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &784747826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 784747824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 784747828}
-  _slotButton: {fileID: 784747827}
 --- !u!114 &784747827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,7 +2505,7 @@ GameObject:
   - component: {fileID: 789875696}
   - component: {fileID: 789875695}
   m_Layer: 5
-  m_Name: EquipmentLeftPanelView
+  m_Name: Equipment Sub Slot View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2608,18 +2518,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 789875693}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1935289967}
-  m_Father: {fileID: 1697763032}
+  m_Father: {fileID: 1780642322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 0, y: 300}
+  m_AnchoredPosition: {x: -650, y: -240}
+  m_SizeDelta: {x: -1320, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &789875695
 MonoBehaviour:
@@ -2698,9 +2608,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815272321}
-  - component: {fileID: 815272322}
   m_Layer: 5
-  m_Name: RightPanel_Description
+  m_Name: Description View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2724,26 +2633,11 @@ RectTransform:
   - {fileID: 1951825132}
   m_Father: {fileID: 1780642322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -225, y: 0}
-  m_SizeDelta: {x: 400, y: 900}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -225, y: -320}
+  m_SizeDelta: {x: 400, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &815272322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 815272320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be6180fe6f259b248a30065d7d49c719, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemNameText: {fileID: 611425731}
-  _itemDescriptionText: {fileID: 1793529125}
-  _itemIconImage: {fileID: 1951825133}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2802,7 +2696,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 852072276}
-  - component: {fileID: 852072277}
   m_Layer: 5
   m_Name: ZodiacItemsSlots
   m_TagString: Untagged
@@ -2841,31 +2734,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &852072277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 852072275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9c3689f7fa295e40961557ab68c6f6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _zodiacSlots:
-  - {fileID: 1175715985}
-  - {fileID: 879972962}
-  - {fileID: 1450507144}
-  - {fileID: 1356755523}
-  - {fileID: 130090026}
-  - {fileID: 2091281795}
-  - {fileID: 2075251029}
-  - {fileID: 673048346}
-  - {fileID: 722641541}
-  - {fileID: 784747826}
-  - {fileID: 206690607}
-  - {fileID: 244107044}
 --- !u!1 &875463520
 GameObject:
   m_ObjectHideFlags: 0
@@ -3014,7 +2882,6 @@ GameObject:
   - component: {fileID: 879972965}
   - component: {fileID: 879972964}
   - component: {fileID: 879972963}
-  - component: {fileID: 879972962}
   m_Layer: 5
   m_Name: OxSlotButton
   m_TagString: Untagged
@@ -3042,20 +2909,6 @@ RectTransform:
   m_AnchoredPosition: {x: 325, y: -200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &879972962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879972960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 879972964}
-  _slotButton: {fileID: 879972963}
 --- !u!114 &879972963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3147,9 +3000,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 905452825}
-  - component: {fileID: 905452826}
   m_Layer: 5
-  m_Name: CenterPanel_MainView
+  m_Name: Center View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3176,24 +3028,6 @@ RectTransform:
   m_AnchoredPosition: {x: 75, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &905452826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905452824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06aabf2159abfe447aaa0c2d6eb12a30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weaponSlotView: {fileID: 1399482266}
-  _skillGroup1SlotView: {fileID: 1177973634}
-  _skillGroup2SlotView: {fileID: 1489269213}
-  _consumableSlotView: {fileID: 1086286272}
-  _zodiacPanelView: {fileID: 852072277}
-  _leftPanelView: {fileID: 1697763033}
 --- !u!1 &927819051
 GameObject:
   m_ObjectHideFlags: 0
@@ -3375,10 +3209,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b0fbbab76aded45a8d95f05b538276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
 --- !u!114 &962175792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3550,7 +3380,7 @@ GameObject:
   - component: {fileID: 1024767790}
   - component: {fileID: 1024767793}
   m_Layer: 5
-  m_Name: InventoryLeftPanelView
+  m_Name: Inventory View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3563,19 +3393,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024767787}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 612671978}
   - {fileID: 1682571149}
-  m_Father: {fileID: 1697763032}
+  m_Father: {fileID: 1780642322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -162.5}
-  m_SizeDelta: {x: 0, y: -325}
+  m_AnchoredPosition: {x: -650, y: -162.5}
+  m_SizeDelta: {x: -1320, y: -505}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1024767790
 MonoBehaviour:
@@ -3663,14 +3493,14 @@ MonoBehaviour:
   mArrangeType: 0
   mFixedRowOrColumnCount: 5
   mPadding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  mItemPadding: {x: 5, y: 5}
+    m_Left: 5
+    m_Right: 5
+    m_Top: 5
+    m_Bottom: 5
+  mItemPadding: {x: 0, y: 0}
   mItemSize: {x: 0, y: 0}
   mItemRecycleDistance: {x: 50, y: 50}
-  mItemSnapEnable: 1
+  mItemSnapEnable: 0
   mGridFixedType: 0
   mViewPortSnapPivot: {x: 0, y: 0}
   mItemSnapPivot: {x: 0, y: 0}
@@ -3686,7 +3516,6 @@ GameObject:
   - component: {fileID: 1086286275}
   - component: {fileID: 1086286274}
   - component: {fileID: 1086286273}
-  - component: {fileID: 1086286272}
   m_Layer: 5
   m_Name: ConsumableSlotButton
   m_TagString: Untagged
@@ -3714,20 +3543,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1086286272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086286270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1086286274}
-  _slotButton: {fileID: 1086286273}
 --- !u!114 &1086286273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3958,7 +3773,6 @@ GameObject:
   - component: {fileID: 1175715988}
   - component: {fileID: 1175715987}
   - component: {fileID: 1175715986}
-  - component: {fileID: 1175715985}
   m_Layer: 5
   m_Name: RatSlotButton
   m_TagString: Untagged
@@ -3986,20 +3800,6 @@ RectTransform:
   m_AnchoredPosition: {x: 400, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1175715985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1175715983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1175715987}
-  _slotButton: {fileID: 1175715986}
 --- !u!114 &1175715986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4094,7 +3894,6 @@ GameObject:
   - component: {fileID: 1177973637}
   - component: {fileID: 1177973636}
   - component: {fileID: 1177973635}
-  - component: {fileID: 1177973634}
   m_Layer: 5
   m_Name: SkillGroup1SlotButton
   m_TagString: Untagged
@@ -4122,20 +3921,6 @@ RectTransform:
   m_AnchoredPosition: {x: -200, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1177973634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1177973632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1177973636}
-  _slotButton: {fileID: 1177973635}
 --- !u!114 &1177973635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4411,7 +4196,7 @@ GameObject:
   - component: {fileID: 1261417374}
   - component: {fileID: 1261417373}
   m_Layer: 5
-  m_Name: Background
+  m_Name: LeftPanel_Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4424,17 +4209,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1261417371}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1697763032}
+  m_Father: {fileID: 1780642322}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -650, y: 0}
+  m_SizeDelta: {x: -1320, y: -180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1261417373
 MonoBehaviour:
@@ -4486,7 +4271,6 @@ GameObject:
   - component: {fileID: 1356755526}
   - component: {fileID: 1356755525}
   - component: {fileID: 1356755524}
-  - component: {fileID: 1356755523}
   m_Layer: 5
   m_Name: RabbitSlotButton
   m_TagString: Untagged
@@ -4514,20 +4298,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -400}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1356755523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356755521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1356755525}
-  _slotButton: {fileID: 1356755524}
 --- !u!114 &1356755524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4622,7 +4392,8 @@ GameObject:
   - component: {fileID: 1399482269}
   - component: {fileID: 1399482268}
   - component: {fileID: 1399482267}
-  - component: {fileID: 1399482266}
+  - component: {fileID: 1399482271}
+  - component: {fileID: 1399482270}
   m_Layer: 5
   m_Name: WeaponSlotButton
   m_TagString: Untagged
@@ -4650,20 +4421,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1399482266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1399482264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1399482268}
-  _slotButton: {fileID: 1399482267}
 --- !u!114 &1399482267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4746,6 +4503,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399482264}
   m_CullTransparentMesh: 1
+--- !u!114 &1399482270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399482264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _iconImage: {fileID: 0}
+  _slotButton: {fileID: 0}
+  _equipmentSlotDefinition: {fileID: 11400000, guid: 285379832df9ba54198b8f4174465fd3, type: 2}
+  _slotId: wpbtn_01
+--- !u!114 &1399482271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399482264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1399482270}
+          m_TargetAssemblyTypeName: InventorySystem.UI.Screens.InventoryScreen.SlotView,
+            Assembly-CSharp
+          m_MethodName: HandleSlotHovered
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1399482270}
+          m_TargetAssemblyTypeName: InventorySystem.UI.Screens.InventoryScreen.SlotView,
+            Assembly-CSharp
+          m_MethodName: HandleSlotClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1450507142
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,7 +4578,6 @@ GameObject:
   - component: {fileID: 1450507147}
   - component: {fileID: 1450507146}
   - component: {fileID: 1450507145}
-  - component: {fileID: 1450507144}
   m_Layer: 5
   m_Name: TigerSlotButton
   m_TagString: Untagged
@@ -4786,20 +4605,6 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: -325}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1450507144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1450507142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1450507146}
-  _slotButton: {fileID: 1450507145}
 --- !u!114 &1450507145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5008,7 +4813,6 @@ GameObject:
   - component: {fileID: 1489269216}
   - component: {fileID: 1489269215}
   - component: {fileID: 1489269214}
-  - component: {fileID: 1489269213}
   m_Layer: 5
   m_Name: SkillGroup2SlotButton
   m_TagString: Untagged
@@ -5036,20 +4840,6 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: 0}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1489269213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489269211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 1489269215}
-  _slotButton: {fileID: 1489269214}
 --- !u!114 &1489269214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5394,58 +5184,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1682571148}
   m_CullTransparentMesh: 1
---- !u!1 &1697763031
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1697763032}
-  - component: {fileID: 1697763033}
-  m_Layer: 5
-  m_Name: LeftPanel_Inventory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1697763032
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697763031}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1261417372}
-  - {fileID: 789875694}
-  - {fileID: 1024767788}
-  m_Father: {fileID: 1780642322}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 310, y: 0}
-  m_SizeDelta: {x: 600, y: 900}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1697763033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1697763031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8eba76e98c89f674e9445bb34eb20514, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _loopGridView: {fileID: 1024767793}
 --- !u!1 &1780642318
 GameObject:
   m_ObjectHideFlags: 0
@@ -5540,7 +5278,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1697763032}
+  - {fileID: 789875694}
+  - {fileID: 1024767788}
+  - {fileID: 1261417372}
   - {fileID: 815272321}
   - {fileID: 905452825}
   m_Father: {fileID: 0}
@@ -6184,7 +5924,6 @@ GameObject:
   - component: {fileID: 2075251032}
   - component: {fileID: 2075251031}
   - component: {fileID: 2075251030}
-  - component: {fileID: 2075251029}
   m_Layer: 5
   m_Name: HorseSlotButton
   m_TagString: Untagged
@@ -6212,20 +5951,6 @@ RectTransform:
   m_AnchoredPosition: {x: -400, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2075251029
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2075251027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 2075251031}
-  _slotButton: {fileID: 2075251030}
 --- !u!114 &2075251030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6320,7 +6045,6 @@ GameObject:
   - component: {fileID: 2091281798}
   - component: {fileID: 2091281797}
   - component: {fileID: 2091281796}
-  - component: {fileID: 2091281795}
   m_Layer: 5
   m_Name: SnakeSlotButton
   m_TagString: Untagged
@@ -6348,20 +6072,6 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: 325}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2091281795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2091281793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _iconImage: {fileID: 2091281797}
-  _slotButton: {fileID: 2091281796}
 --- !u!114 &2091281796
 MonoBehaviour:
   m_ObjectHideFlags: 0

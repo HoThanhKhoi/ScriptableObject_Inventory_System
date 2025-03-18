@@ -19,6 +19,6 @@ namespace InventorySystem.Core.Interfaces
 		BaseItem[] GetAllItems();
 
 		// For UI to see what's currently equipped
-		InventorySlot GetSlot(string slotId);
+		SlotModel GetSlot(string slotId);
 	}
 }

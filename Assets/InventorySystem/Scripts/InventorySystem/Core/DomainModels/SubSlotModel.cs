@@ -2,7 +2,7 @@ using InventorySystem.Data.Items;
 
 namespace InventorySystem.Core.DomainModels
 {
-	public class SubEquipmentSlot
+	public class SubSlotModel
 	{
 		public int SubSlotIndex;
 		public BaseItem EquippedItem;

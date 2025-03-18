@@ -1,10 +1,11 @@
 namespace InventorySystem.Data.Enums
 {
-	public enum ItemCategory
+	public enum ItemCategoryEnum
 	{
 		None,
 		Weapon,
 		Consumable,
+		Skill,
 		ZodiacRat,
 		ZodiacOx,
 		ZodiacTiger,
@@ -17,7 +18,6 @@ namespace InventorySystem.Data.Enums
 		ZodiacRooster,
 		ZodiacDog,
 		ZodiacPig,
-		SkillGroup1,
-		SkillGroup2
+		Miscellaneous
 	}
 }

@@ -7,7 +7,12 @@ namespace InventorySystem.Data
 	[CreateAssetMenu(menuName = "InventorySystem/SlotDefinition")]
 	public class EquipmentSlotDefinition : ScriptableObject
 	{
-		public string SlotId;
-		public List<ItemCategory> AllowedCategories;
+		[SerializeField] private SlotIdEnum _slotId;
+		[SerializeField] private List<ItemCategoryEnum> _allowedCategories;
+		[SerializeField] private int _capacity;
+
+		public SlotIdEnum SlotId => _slotId;
+		public List<ItemCategoryEnum> AllowedCategories => _allowedCategories;
+		public int Capacity => _capacity;
 	}
 }

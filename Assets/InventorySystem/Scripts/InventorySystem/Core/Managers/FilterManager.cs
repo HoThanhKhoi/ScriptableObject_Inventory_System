@@ -10,12 +10,12 @@ namespace InventorySystem.Core.Managers
 	// Provides filtering and sorting utilities for items.
 	public class FilterManager : IFilterService
 	{
-		public IEnumerable<BaseItem> FilterByCategory(IEnumerable<BaseItem> items, ItemCategory category)
+		public IEnumerable<BaseItem> FilterByCategory(IEnumerable<BaseItem> items, ItemCategoryEnum category)
 		{
 			return items.Where(i => i.Category == category);
 		}
 
-		public IEnumerable<BaseItem> FilterByMultipleCategories(IEnumerable<BaseItem> items, List<ItemCategory> categories)
+		public IEnumerable<BaseItem> FilterByMultipleCategories(IEnumerable<BaseItem> items, List<ItemCategoryEnum> categories)
 		{
 			return items.Where(i => categories.Contains(i.Category));
 		}
@@ -25,14 +25,14 @@ namespace InventorySystem.Core.Managers
 			return items.OrderBy(i => i.DisplayName);
 		}
 
-		public IEnumerable<BaseItem> FilterAndSort(IEnumerable<BaseItem> items, ItemCategory category)
+		public IEnumerable<BaseItem> FilterAndSort(IEnumerable<BaseItem> items, ItemCategoryEnum category)
 		{
 			var filtered = FilterByCategory(items, category);
 			return SortAlphabetically(filtered);
 		}
 
 		// Overload for multiple categories
-		public IEnumerable<BaseItem> FilterAndSort(IEnumerable<BaseItem> items, List<ItemCategory> categories)
+		public IEnumerable<BaseItem> FilterAndSort(IEnumerable<BaseItem> items, List<ItemCategoryEnum> categories)
 		{
 			var filtered = FilterByMultipleCategories(items, categories);
 			return SortAlphabetically(filtered);

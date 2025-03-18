@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 5449638929076721441}
   - component: {fileID: 4165861220266696168}
   - component: {fileID: 1772238121589494199}
-  - component: {fileID: -5920510526148042100}
   - component: {fileID: 1528322215291180329}
   m_Layer: 5
   m_Name: MyInventoryCellUI
@@ -232,18 +231,6 @@ MonoBehaviour:
   _itemNameText: {fileID: 3782935932145305944}
   _itemIcon: {fileID: 1705225550331382603}
   _cellButton: {fileID: 1725704694246492837}
---- !u!114 &-5920510526148042100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5118743797116120768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbcbd7952202d4d44a555aea5af2a351, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1528322215291180329
 MonoBehaviour:
   m_ObjectHideFlags: 0

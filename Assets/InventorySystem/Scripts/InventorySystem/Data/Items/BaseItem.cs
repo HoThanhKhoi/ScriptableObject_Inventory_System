@@ -12,7 +12,7 @@ namespace InventorySystem.Data.Items
 		public Sprite Icon;
 
 		[Header("Classification")]
-		public ItemCategory Category;
+		public ItemCategoryEnum Category;
 
 		[TextArea]
 		public string Description;

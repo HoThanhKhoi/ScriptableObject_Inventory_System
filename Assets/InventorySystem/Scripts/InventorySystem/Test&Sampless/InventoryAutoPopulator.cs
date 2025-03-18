@@ -2,27 +2,52 @@ using UnityEngine;
 using VContainer;
 using InventorySystem.Core.Interfaces;
 using InventorySystem.Data.Items;
+using InventorySystem.Data;
+using System.Collections.Generic;
+using InventorySystem.Data.Enums;
 
 public class InventoryAutoPopulator : MonoBehaviour
 {
 	[SerializeField] private BaseItem[] _itemsToAdd;
+	private Dictionary<SlotIdEnum, EquipmentSlotDefinition> _slotDefinitions;
 
-	private IInventoryService _inventoryService;
+	//private IInventoryService _inventoryService;
+	private IEquipmentSlotService _slotService;
 
 	[Inject]
 	public void Construct(IInventoryService inventoryService)
 	{
-		_inventoryService = inventoryService;
+		//_inventoryService = inventoryService;
 	}
 
 	private void Start()
 	{
-		foreach (var item in _itemsToAdd)
+		//foreach (var item in _itemsToAdd)
+		//{
+		//	if (item != null)
+		//	{
+		//		_inventoryService.AddItem(item);
+		//	}
+		//}
+
+		GetSlotDefinitionInHierarchy();
+
+		foreach (var slot in _slotDefinitions)
 		{
-			if (item != null)
+			if (slot.Value != null)
 			{
-				_inventoryService.AddItem(item);
+				_slotService.AddSlotDefinition(slot.Key, slot.Value);
 			}
+		}
+	}
+
+	private void GetSlotDefinitionInHierarchy()
+	{
+		_slotDefinitions = new Dictionary<SlotIdEnum, EquipmentSlotDefinition>();
+		EquipmentSlotDefinition[] slotDefinitions = FindObjectsByType<EquipmentSlotDefinition>(FindObjectsSortMode.None);
+		foreach (var slot in slotDefinitions)
+		{
+			_slotDefinitions.Add(slot.SlotId, slot);
 		}
 	}
 }
