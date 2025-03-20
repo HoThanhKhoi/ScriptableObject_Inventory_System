@@ -14,15 +14,15 @@ namespace InventorySystem.Infrastructure.DI
 		// 2. Override the Configure method
 		protected override void Configure(IContainerBuilder builder)
 		{
-			Debug.Log("ProjectInstaller: Configure is running!");
+			
 
 			// Register EventBus as a singleton
 			builder.Register<EventBus>(Lifetime.Singleton)
 				   .As<IEventBus>();
 
 			// Register InventoryManager as IInventoryService
-			//builder.Register<InventoryManager>(Lifetime.Singleton)
-				   //.As<IInventoryService>();
+			builder.Register<InventoryManager>(Lifetime.Singleton)
+				   .As<IInventoryService>();
 
 			// Register EquipmentSlotManager as IEquipmentSlotService
 			builder.Register<EquipmentSlotManager>(Lifetime.Singleton)

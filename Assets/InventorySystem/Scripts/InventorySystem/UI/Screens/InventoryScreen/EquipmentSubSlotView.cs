@@ -11,7 +11,12 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 {
 	public class EquipmentSubSlotView : MonoBehaviour
 	{
-		[SerializeField] private LoopGridView _loopGridView;
+		[SerializeField] private int columnCount = 5;
+		[SerializeField] GameObject subSlotButton;
+
+		private Vector2 _currentPosition;
+
+		Dictionary<int, SubSlotModel> subSlotButtons = new Dictionary<int, SubSlotModel>();
 
 		private List<SubSlotModel> _subSlots = new List<SubSlotModel>();
 
@@ -45,8 +50,13 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		{
 			SlotIdEnum slotId = _equipmentService.GetSlotId(e.SlotDefinition);
 
-			Debug.Log(slotId);
-			Debug.Log($"[EquipmentSubSlotView] Clicked item: {e.SelectedItem?.DisplayName}");
+			Debug.Log($"[EquipmentSubSlotView] Clicked item: {e.SlotDefinition.AllowedCategories[0]}, {e.SlotDefinition.SlotId}, {e.SlotDefinition.Capacity}");
+
+			SlotModel slot = _inventoryService.GetSlot(slotId);
+
+
+
+			Debug.Log($"[EquipmentSubSlotView] Clicked item: {slot == null}");
 		}
 	}
 
