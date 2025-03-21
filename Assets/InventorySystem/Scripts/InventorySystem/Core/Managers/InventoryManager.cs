@@ -104,6 +104,8 @@ namespace InventorySystem.Core.Managers
 			return _allItems.ToArray();
 		}
 
+
+
 		public SlotModel GetSlot(SlotIdEnum slotId)
 		{
 			if (_equippedSlots == null) return null;

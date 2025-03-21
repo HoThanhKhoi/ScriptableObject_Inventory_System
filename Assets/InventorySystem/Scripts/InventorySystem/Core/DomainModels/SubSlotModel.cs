@@ -4,7 +4,7 @@ namespace InventorySystem.Core.DomainModels
 {
 	public class SubSlotModel
 	{
-		public int SubSlotIndex;
+		public int SubSlotId;
 		public BaseItem EquippedItem;
 	}
 
