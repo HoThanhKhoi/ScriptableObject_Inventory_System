@@ -1,16 +1,10 @@
+using InventorySystem.Data.Items;
 using UnityEngine;
 
-public class OnSubSlotHoveredEvent : MonoBehaviour
+namespace InventorySystem.Infrastructure.Events
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public struct OnSubSlotHoveredEvent
+	{
+		public BaseItem SelectedItem { get; set; }
+	}
 }

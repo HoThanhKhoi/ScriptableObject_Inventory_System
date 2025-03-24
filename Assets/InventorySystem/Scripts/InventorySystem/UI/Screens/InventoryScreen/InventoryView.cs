@@ -3,6 +3,9 @@ using SuperScrollView;
 using VContainer;
 using InventorySystem.Data.Items;
 using InventorySystem.Infrastructure.Events;
+using InventorySystem.Core.Interfaces;
+using InventorySystem.Data.Enums;
+using System.Linq;
 
 namespace InventorySystem.UI.Screens.InventoryScreen
 {
@@ -12,11 +15,31 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		private BaseItem[] _currentItems = new BaseItem[0];
 		private IEventBus _eventBus;
+		private IInventoryService _inventoryService;
+
 
 		[Inject]
-		public void Construct(IEventBus eventBus)
+		public void Construct(IEventBus eventBus, IInventoryService inventoryService)
 		{
+			_inventoryService = inventoryService;
 			_eventBus = eventBus;
+		}
+
+		private void OnEnable()
+		{
+			//_eventBus.Subscribe<OnSlotHoveredEvent>(OnSlotHovered);
+			//_eventBus.Subscribe<OnSubSlotHoveredEvent>(OnSubSlotHovered);
+			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClickedEvent);
+			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+
+		}
+
+		private void OnDisable()
+		{
+			//_eventBus.Subscribe<OnSlotHoveredEvent>(OnSlotHovered);
+			//_eventBus.Subscribe<OnSubSlotHoveredEvent>(OnSubSlotHovered);
+			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClickedEvent);
+			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
 		}
 
 		private void Start()
@@ -30,9 +53,42 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			}
 		}
 
-		public void ShowItems(BaseItem[] items)
+		//private void OnSlotHovered(OnSlotHoveredEvent e)
+		//{
+		//	Debug.Log($"[InventoryView] Slot Hovered item: {e.SlotDefinition?.name}");
+		//	if (e.SlotDefinition == null) return;
+		//	ShowItemsByCategory(e.SlotDefinition.AllowedCategories[0]);
+		//}
+
+		//private void OnSubSlotHovered(OnSubSlotHoveredEvent e)
+		//{
+		//	Debug.Log($"[InventoryView] Sub Hovered item: {e.SelectedItem?.DisplayName}");
+		//	if (e.SelectedItem == null) return;
+		//	ShowItemsByCategory(e.SelectedItem.Category);
+		//}
+
+		private void OnSlotClickedEvent(OnSlotClickedEvent e)
 		{
-			_currentItems = items ?? new BaseItem[0];
+			Debug.Log($"[InventoryView] Slot Clicked item: {e.SlotDefinition?.name}");
+			if (e.SlotDefinition == null) return;
+			ShowItemsByCategory(e.SlotDefinition.AllowedCategories[0]);
+		}
+
+		private void OnSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)
+		{
+			Debug.Log($"[InventoryView] Sub Left Clicked item: {e.SelectedItem?.DisplayName}");
+			if (e.SelectedItem == null) return;
+			ShowItemsByCategory(e.SelectedItem.Category);
+		}
+
+		private void ShowItemsByCategory (ItemCategoryEnum category)
+		{
+			var allItems = _inventoryService.GetAllItems();
+
+			var filtered = allItems.Where(item => item.Category == category).ToArray();
+
+			_currentItems = filtered;
+
 			if (_loopGridView == null) return;
 
 			// Update the item count and refresh
@@ -40,7 +96,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			_loopGridView.RefreshAllShownItem();
 		}
 
-		// IMPORTANT: This callback signature differs from LoopListView2
 		private LoopGridViewItem OnGetItemByRowColumn(LoopGridView gridView, int index, int row, int column)
 		{
 			if (index < 0 || index >= _currentItems.Length)
@@ -54,19 +109,10 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			var cell = itemObj.GetComponent<MyInventoryCellUI>();
 			if (cell != null)
 			{
-				cell.SetItemData(itemData);
-				cell.OnCellClicked = OnCellClicked;
+				cell.Init(itemData, _eventBus);
 			}
 
 			return itemObj;
-		}
-
-		private void OnCellClicked(BaseItem clickedItem)
-		{
-			Debug.Log($"[InventoryLeftPanelView] Clicked item: {clickedItem?.DisplayName}");
-
-			// Publish an event or notify parent
-			_eventBus.Publish(new ItemSelectedEvent { SelectedItem = clickedItem });
 		}
 	}
 

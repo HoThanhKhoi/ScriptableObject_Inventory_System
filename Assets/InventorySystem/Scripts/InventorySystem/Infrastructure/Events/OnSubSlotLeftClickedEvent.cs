@@ -1,16 +1,15 @@
+using InventorySystem.Core.DomainModels;
+using InventorySystem.Data;
+using InventorySystem.Data.Enums;
+using InventorySystem.Data.Items;
 using UnityEngine;
 
-public class OnSubSlotLeftClickedEvent : MonoBehaviour
+namespace InventorySystem.Infrastructure.Events
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public struct OnSubSlotLeftClickedEvent
+	{
+		public BaseItem SelectedItem { get; set; }
+		public int SubSlotId { get; set; }
+		public SlotIdEnum SlotId { get; set; }
+	}
 }

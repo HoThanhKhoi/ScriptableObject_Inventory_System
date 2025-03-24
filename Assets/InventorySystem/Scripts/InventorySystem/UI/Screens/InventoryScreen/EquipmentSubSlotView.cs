@@ -54,7 +54,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		private void Start()
 		{
 			_currentSubSlotPosition = _initialSubSlotPosition;
-			CreateSubSlots(maxCapacity);
+			CreateSubSlotButtons(maxCapacity);
 		}
 
 		private void OnItemSelected(OnSlotClickedEvent e)
@@ -65,41 +65,45 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 			SlotIdEnum slotId = _equipmentService.GetSlotId(e.SlotDefinition);
 
-			Debug.Log($"[EquipmentSubSlotView] Clicked item: {e.SlotDefinition.AllowedCategories[0]}, {e.SlotDefinition.SlotId}, {e.SlotDefinition.Capacity}");
+			//Debug.Log($"[EquipmentSubSlotView] Clicked item: " +
+			//	$"{e.SlotDefinition.AllowedCategories[0]}, {e.SlotDefinition.SlotId}, {e.SlotDefinition.Capacity}");
 
 			slotModel = _inventoryService.GetSlot(slotId);
 
-			SubSlotView subSlot;
+			SubSlotView subSlotView;
 
 			for (int i = 0; i < slotCapacity; i++)
 			{
-				subSlot = subSlotButtons[i];
-				subSlot.gameObject.SetActive(true);
+				subSlotView = subSlotButtons[i];
+
+				//Debug.Log($"[EquipmentSubSlotView] Clicked item: {slotModel == null}, {slotModel.SlotId == null}, {subSlotView.SlotId == null}");
+				subSlotView.SetupSubSlot(i, slotModel.SlotId);
+				
+				subSlotView.gameObject.SetActive(true);
 			}
 
 			for (int i = slotCapacity; i < maxCapacity; i++)
 			{
-				subSlot = subSlotButtons[i];
-				subSlot.gameObject.SetActive(false);
+				subSlotView = subSlotButtons[i];
+				subSlotView.gameObject.SetActive(false);
 			}
-
-			Debug.Log($"[EquipmentSubSlotView] Clicked item: {slotModel == null}");
 		}
 
-		private void CreateSubSlots(int maxCapacity)
+		private void CreateSubSlotButtons(int maxCapacity)
 		{
 			for (int i = 0; i < maxCapacity; i++)
 			{
 				GameObject button = Instantiate(subSlotButton, transform);
+				Debug.Log($"[EquipmentSubSlotView] Creating sub slot button: {button == null}");
 				
 				_rectTransform = button.GetComponent<RectTransform>();
 				_rectTransform.anchoredPosition = _currentSubSlotPosition;
 				
 				button.SetActive(false);
 				
-				SubSlotView subSlot = button.GetComponent<SubSlotView>();
-				subSlotButtons.Add(i, subSlot);
-				
+				SubSlotView subSlotView = button.GetComponent<SubSlotView>();
+				subSlotButtons.Add(i, subSlotView);
+
 				_currentSubSlotPosition.x += subSlotButtonPadding;
 				if (i == columnCount - 1)
 				{

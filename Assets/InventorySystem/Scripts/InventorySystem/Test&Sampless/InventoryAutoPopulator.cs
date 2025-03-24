@@ -11,24 +11,31 @@ public class InventoryAutoPopulator : MonoBehaviour
 	[SerializeField] private BaseItem[] _itemsToAdd;
 	private Dictionary<SlotIdEnum, EquipmentSlotDefinition> _slotDefinitions;
 
-	//private IInventoryService _inventoryService;
+	private IInventoryService _inventoryService;
 	private IEquipmentSlotService _slotService;
 
 	[Inject]
 	public void Construct(IInventoryService inventoryService)
 	{
-		//_inventoryService = inventoryService;
+		_inventoryService = inventoryService;
+	}
+
+	private void OnEnable()
+	{
+		_inventoryService.InitializeInventory();
 	}
 
 	private void Start()
 	{
-		//foreach (var item in _itemsToAdd)
-		//{
-		//	if (item != null)
-		//	{
-		//		_inventoryService.AddItem(item);
-		//	}
-		//}
+		foreach (var item in _itemsToAdd)
+		{
+			if (item != null)
+			{
+				_inventoryService.AddItem(item);
+			}
+		}
+
+		Debug.Log($"{_inventoryService.GetAllItems().Length} items in inventory");
 
 		GetSlotDefinitionInHierarchy();
 

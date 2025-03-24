@@ -6,13 +6,15 @@ namespace InventorySystem.Core.Interfaces
 {
 	public interface IInventoryService
 	{
+		void InitializeInventory();
+
 		void AddItem(BaseItem item);
 		void RemoveItem(BaseItem item);
 
 		//bool CanEquipItem(BaseItem item, string slotId);
 
 		void EquipItem(BaseItem item, SlotIdEnum slotId, int subSlotIndex);
-		void UnequipItem(SlotIdEnum slotId, int subSlotIndex);
+		void UnequipItem(SlotIdEnum slotId, int subSlotId);
 
 		// Query methods
 		//bool IsEquipped(string slotId);
@@ -21,5 +23,9 @@ namespace InventorySystem.Core.Interfaces
 
 		// For UI to see what's currently equipped
 		SlotModel GetSlot(SlotIdEnum slotId);
+
+		bool SetSubSlotClickedStatus(bool status);
+
+		public bool GetSubSlotClickedStatus();
 	}
 }

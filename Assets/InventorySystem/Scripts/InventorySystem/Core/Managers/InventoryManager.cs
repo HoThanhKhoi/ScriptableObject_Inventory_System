@@ -5,6 +5,8 @@ using InventorySystem.Data.Items;
 using InventorySystem.Infrastructure.Events;
 using InventorySystem.Core.DomainModels;
 using InventorySystem.Data.Enums;
+using System;
+using System.Diagnostics;
 
 namespace InventorySystem.Core.Managers
 {
@@ -14,6 +16,8 @@ namespace InventorySystem.Core.Managers
 		private readonly Dictionary<SlotIdEnum, SlotModel> _equippedSlots;
 		private readonly List<BaseItem> _allItems;
 		private readonly IEquipmentSlotService _slotService; // We need this to get capacity, etc.
+		
+		private bool _onSubSlotClickedStatus;
 
 		public InventoryManager(IEventBus eventBus, IEquipmentSlotService slotService)
 		{
@@ -21,6 +25,14 @@ namespace InventorySystem.Core.Managers
 			_slotService = slotService;
 			_equippedSlots = new Dictionary<SlotIdEnum, SlotModel>();
 			_allItems = new List<BaseItem>();
+		}
+
+		public void InitializeInventory() 
+		{
+			foreach(SlotIdEnum slotId in Enum.GetValues(typeof(SlotIdEnum)))
+			{
+				GetOrCreateSlot(slotId);
+			}
 		}
 
 		public void AddItem(BaseItem item)
@@ -51,27 +63,27 @@ namespace InventorySystem.Core.Managers
 		}
 
 		// Overload for multi-sub-slot
-		public void EquipItem(BaseItem item, SlotIdEnum slotId, int subSlotIndex)
+		public void EquipItem(BaseItem item, SlotIdEnum slotId, int subSlotId)
 		{
 			//if (!CanEquipItem(item, slotId)) return;
 
-			var slot = GetOrCreateSlot(slotId);
+			SlotModel slot = GetOrCreateSlot(slotId);
 
 			// Ensure subSlotIndex is valid
 			int capacity = _slotService.GetCapacity(slotId);
 			// If subSlotIndex is out of range, we clamp it
-			if (subSlotIndex < 0) subSlotIndex = 0;
-			if (subSlotIndex >= capacity) subSlotIndex = capacity - 1;
+			if (subSlotId < 0) subSlotId = 0;
+			if (subSlotId >= capacity) subSlotId = capacity - 1;
 
 			// If the sub-slot doesn't exist yet, we expand the list up to subSlotIndex
-			while (slot.EquippedItems.Count <= subSlotIndex)
+			while (slot.EquippedItems.Count <= subSlotId)
 			{
 				slot.EquippedItems.Add(null);
 			}
 
 			// Override the existing item at subSlotIndex
-			var oldItem = slot.EquippedItems[subSlotIndex];
-			slot.EquippedItems[subSlotIndex] = item;
+			BaseItem oldItem = slot.EquippedItems[subSlotId];
+			slot.EquippedItems[subSlotId] = item;
 
 			// If oldItem != null, that item is replaced
 			// Publish events
@@ -115,16 +127,30 @@ namespace InventorySystem.Core.Managers
 			return slot;
 		}
 
+
+
 		// Helper
 		private SlotModel GetOrCreateSlot(SlotIdEnum slotId)
 		{
-			if (!_equippedSlots.TryGetValue(slotId, out var slot))
+			if (!_equippedSlots.TryGetValue(slotId, out SlotModel slot))
 			{
 				slot = new SlotModel(slotId);
 				_equippedSlots[slotId] = slot;
 			}
 			return slot;
 		}
+
+		public bool SetSubSlotClickedStatus(bool status)
+		{
+			return _onSubSlotClickedStatus = status;
+		}
+		
+		public bool GetSubSlotClickedStatus()
+		{
+			return _onSubSlotClickedStatus;
+		}
+
+
 
 		//public bool IsEquipped(string slotId)
 		//{

@@ -182,8 +182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93ce36ae9bfbfa74a9bdc38dffb2f303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iconImage: {fileID: 0}
-  _slotButton: {fileID: 0}
+  _iconImage: {fileID: 4768666005957321363}
+  _slotButton: {fileID: 930963889933498414}
   _equipmentSlotDefinition: {fileID: 11400000, guid: 285379832df9ba54198b8f4174465fd3, type: 2}
 --- !u!1 &7861360889078473976
 GameObject:

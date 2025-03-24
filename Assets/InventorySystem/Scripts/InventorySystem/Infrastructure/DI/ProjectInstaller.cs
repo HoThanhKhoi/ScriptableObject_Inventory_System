@@ -9,6 +9,7 @@ using InventorySystem.UI.Screens.InventoryScreen;
 namespace InventorySystem.Infrastructure.DI
 {
 	// 1. Inherit from LifetimeScope
+
 	public class ProjectInstaller : LifetimeScope
 	{
 		// 2. Override the Configure method
@@ -35,7 +36,8 @@ namespace InventorySystem.Infrastructure.DI
 			builder.RegisterComponentInHierarchy<InventoryView>();
 			builder.RegisterComponentInHierarchy<SlotView>();
 			builder.RegisterComponentInHierarchy<EquipmentSubSlotView>();
-			//builder.RegisterComponentInHierarchy<>();
+			builder.RegisterComponentInHierarchy<InventoryAutoPopulator>();
+			
 
 			//builder.RegisterComponentInHierarchy<InventoryMainView>();
 			//builder.RegisterComponentInHierarchy<InventoryLeftPanelView>();

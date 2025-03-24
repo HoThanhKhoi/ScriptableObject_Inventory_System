@@ -4,6 +4,11 @@ using InventorySystem.Data.Items;
 using InventorySystem.Data;
 using InventorySystem.Infrastructure.Events;
 using VContainer;
+using InventorySystem.Data.Enums;
+using InventorySystem.Core.DomainModels;
+using UnityEngine.EventSystems;
+using InventorySystem.Core.Interfaces;
+using TMPro;
 
 namespace InventorySystem.UI.Screens.InventoryScreen
 {
@@ -12,14 +17,30 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 	{
 		[SerializeField] private Image _iconImage;
 		[SerializeField] private Button _slotButton;
-		private BaseItem _equippedItem;
+		[SerializeField] private TextMeshProUGUI _subSlotText;
 
+		private BaseItem _equippedItem;
 		private IEventBus _eventBus;
+		private IInventoryService _inventoryService;
+		
+		public SubSlotModel SubSlotModel { get; private set; }
+		public int SubSlotId { get; private set; }
+		public SlotIdEnum SlotId { get; private set; }
 
 		[Inject]
 		public void Construct(IEventBus eventBus)
 		{
 			_eventBus = eventBus;
+		}
+
+		private void OnEnable()
+		{
+			_eventBus.Subscribe<ItemSelectedEvent>(SetEquippedItem);
+		}
+
+		private void OnDisable()
+		{
+			_eventBus.Unsubscribe<ItemSelectedEvent>(SetEquippedItem);
 		}
 
 		private void Awake()
@@ -35,17 +56,67 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		public void HandleSubSlotHovered()
 		{
-			//_eventBus.Publish(new OnSubSlotHoveredEvent { SelectedItem = _equippedItem });
+			//_eventBus.Publish(new OnSubSlotHoveredEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
+		}
+
+		public void OnPointerClickEvent(BaseEventData baseEvent)
+		{
+			// Attempt to cast BaseEventData -> PointerEventData
+			PointerEventData eventData = baseEvent as PointerEventData;
+			if (eventData == null)
+				return;
+
+			// Now check which mouse button was used
+			if (eventData.button == PointerEventData.InputButton.Left)
+			{
+				HandleSubSlotLeftClick();
+			}
+			else if (eventData.button == PointerEventData.InputButton.Right)
+			{
+				HandleSubSlotRightClick();
+			}
 		}
 
 		public void HandleSubSlotRightClick()
 		{
+			Debug.Log($"[SubSlotView] Right Clicked item: {SubSlotId}, {SlotId}");
 			//_eventBus.Publish(new OnSubSlotRightClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
 		}
 
 		public void HandleSubSlotLeftClick()
 		{
-			//_eventBus.Publish(new OnSubSlotLeftClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
+			Debug.Log($"[SubSlotView] Left Clicked item: {SubSlotId}, {SlotId}");
+			_inventoryService.SetSubSlotClickedStatus(true);
+			_eventBus.Publish(new OnSubSlotLeftClickedEvent { SelectedItem = _equippedItem, SlotId = SlotId, SubSlotId = SubSlotId });
+		}
+
+		public void SetupSubSlot(int subSlotId, SlotIdEnum slotId)
+		{
+			SubSlotId = subSlotId;
+			SlotId = slotId;
+		}
+
+		public void SetEquippedItem(ItemSelectedEvent e)
+		{
+			_inventoryService.SetSubSlotClickedStatus(false);
+
+			_equippedItem = e.SelectedItem;
+			
+			if (_iconImage == null) return;
+			if (_subSlotText == null) return;
+
+			if (e.SelectedItem == null)
+			{
+				_subSlotText.enabled = false;
+				_iconImage.enabled = false;
+			}
+			else
+			{
+				_subSlotText.enabled = true;
+				_subSlotText.text = e.SelectedItem.DisplayName;
+				_iconImage.enabled = true;
+				_iconImage.sprite = e.SelectedItem.Icon;
+			}
 		}
 
 		////private void HandleSlotHovered()
