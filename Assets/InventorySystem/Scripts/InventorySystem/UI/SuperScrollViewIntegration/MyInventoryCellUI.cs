@@ -22,19 +22,33 @@ public class MyInventoryCellUI : LoopGridViewItem
 	private SlotIdEnum _currentSlotId;
 	private int _currentSubSlotId;
 
+	[Inject]
+	public void Construct(IEventBus eventBus, IInventoryService inventoryService)
+	{
+		if (eventBus == null) return;
+		_eventBus = eventBus;
+		_inventoryService = inventoryService;
+	}
+
+
+
 	private void Awake()
 	{
-
+		VContainerUtils.AutoInjectSelf(this);
 	}
 
 	private void OnEnable()
 	{
-		_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(SetSubSlotLeftClicked);
 	}
 
 	private void OnDisable()
 	{
+		if (_eventBus == null) return;
 		_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(SetSubSlotLeftClicked);
+	}
+
+	private void Start()
+	{
 	}
 
 	public void Init(BaseItem item, IEventBus eventBus)
@@ -57,6 +71,7 @@ public class MyInventoryCellUI : LoopGridViewItem
 
 	public void OnPointerClickEvent(BaseEventData baseEvent)
 	{
+		Debug.Log("OnPointerClickEvent");
 		// Attempt to cast BaseEventData -> PointerEventData
 		PointerEventData eventData = baseEvent as PointerEventData;
 		if (eventData == null)
@@ -89,9 +104,9 @@ public class MyInventoryCellUI : LoopGridViewItem
 		{
 			_inventoryService.EquipItem(clickedItem, _currentSlotId, _currentSubSlotId);
 
-			Debug.Log($"Item equipped: {clickedItem.DisplayName}");
 
 			_eventBus.Publish(new ItemSelectedEvent { SelectedItem = clickedItem });
+			Debug.Log($"[MyInventoryCellUI] Item equipped: {clickedItem.DisplayName}");
 			return;
 		}
 		if (!isSubSlotClicked)

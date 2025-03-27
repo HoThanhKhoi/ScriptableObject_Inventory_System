@@ -9,6 +9,7 @@ using InventorySystem.Core.DomainModels;
 using UnityEngine.EventSystems;
 using InventorySystem.Core.Interfaces;
 using TMPro;
+using System;
 
 namespace InventorySystem.UI.Screens.InventoryScreen
 {
@@ -22,34 +23,49 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		private BaseItem _equippedItem;
 		private IEventBus _eventBus;
 		private IInventoryService _inventoryService;
-		
+
 		public SubSlotModel SubSlotModel { get; private set; }
 		public int SubSlotId { get; private set; }
 		public SlotIdEnum SlotId { get; private set; }
 
 		[Inject]
-		public void Construct(IEventBus eventBus)
+		public void Construct(IEventBus eventBus, IInventoryService inventoryService)
 		{
-			_eventBus = eventBus;
+			Debug.Log("Construct SubSlotView is running");
+
+			if (eventBus != null)
+			{
+				_eventBus = eventBus;
+				_eventBus.Subscribe<ItemSelectedEvent>(SetEquippedItem);
+			}
+
+			if (inventoryService != null)
+			{
+				_inventoryService = inventoryService;
+
+			}
 		}
 
 		private void OnEnable()
 		{
-			_eventBus.Subscribe<ItemSelectedEvent>(SetEquippedItem);
+
 		}
 
 		private void OnDisable()
 		{
+			Debug.Log("OnDisable SubSlotView is running");
+			if (_eventBus == null) return;
 			_eventBus.Unsubscribe<ItemSelectedEvent>(SetEquippedItem);
 		}
 
 		private void Awake()
 		{
-
+			VContainerUtils.AutoInjectSelf(this);
 		}
 
 		private void Start()
 		{
+			//VContainerUtils.AutoInjectSelf(this);
 			//_slotButton.onClick.AddListener(HandleSlotClick);
 			//_slotButton.OnPointerUp.AddListener(HandleSlotHovered);
 		}
@@ -86,6 +102,13 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		public void HandleSubSlotLeftClick()
 		{
 			Debug.Log($"[SubSlotView] Left Clicked item: {SubSlotId}, {SlotId}");
+			Debug.Log($"{_inventoryService == null}");
+
+			//if (_eventBus != null)
+			//{
+			//	_eventBus.Subscribe<ItemSelectedEvent>(SetEquippedItem);
+			//}
+
 			_inventoryService.SetSubSlotClickedStatus(true);
 			_eventBus.Publish(new OnSubSlotLeftClickedEvent { SelectedItem = _equippedItem, SlotId = SlotId, SubSlotId = SubSlotId });
 		}
@@ -96,16 +119,16 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			SlotId = slotId;
 		}
 
-		public void SetEquippedItem(ItemSelectedEvent e)
+		public void UpdateSubSlotUI(SubSlotModel subSlotModel)
 		{
 			_inventoryService.SetSubSlotClickedStatus(false);
 
-			_equippedItem = e.SelectedItem;
-			
+			_equippedItem = subSlotModel.EquippedItem;
+
 			if (_iconImage == null) return;
 			if (_subSlotText == null) return;
 
-			if (e.SelectedItem == null)
+			if (_equippedItem == null)
 			{
 				_subSlotText.enabled = false;
 				_iconImage.enabled = false;
@@ -113,11 +136,20 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			else
 			{
 				_subSlotText.enabled = true;
-				_subSlotText.text = e.SelectedItem.DisplayName;
+				_subSlotText.text = _equippedItem.name;
 				_iconImage.enabled = true;
-				_iconImage.sprite = e.SelectedItem.Icon;
+				_iconImage.sprite = _equippedItem.Icon;
 			}
 		}
+
+		public void SetEquippedItem(ItemSelectedEvent e)
+		{
+			Debug.Log($"[SubSlotView] SetEquippedItem item: {e.SelectedItem?.DisplayName}");
+			
+			//UpdateSubSlotUI(e.SelectedItem.ItemId);
+		}
+
+
 
 		////private void HandleSlotHovered()
 		//{

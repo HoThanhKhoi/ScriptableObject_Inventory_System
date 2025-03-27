@@ -15,5 +15,4 @@ namespace InventorySystem.Core.DomainModels
 			EquippedItem = equippedItem;
 		}
 	}
-
 }

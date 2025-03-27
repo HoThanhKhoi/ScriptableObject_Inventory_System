@@ -10,7 +10,7 @@ namespace InventorySystem.Core.Managers
 	// Manages slot definitions & restrictions.
 	public class EquipmentSlotManager : IEquipmentSlotService
 	{
-		private readonly Dictionary<SlotIdEnum, EquipmentSlotDefinition> _slotDefinitionList = new Dictionary<SlotIdEnum, EquipmentSlotDefinition>();
+		private readonly Dictionary<SlotIdEnum, EquipmentSlotDefinition> _slotDefinitionDictionary = new Dictionary<SlotIdEnum, EquipmentSlotDefinition>();
 
 		//public int GetCapacity(string slotId)
 		//{
@@ -49,7 +49,7 @@ namespace InventorySystem.Core.Managers
 
 		public List<ItemCategoryEnum> GetAllowedCategories(SlotIdEnum slotId)
 		{
-			return _slotDefinitionList[slotId].AllowedCategories;
+			return _slotDefinitionDictionary[slotId].AllowedCategories;
 		}
 		
 
@@ -60,12 +60,12 @@ namespace InventorySystem.Core.Managers
 
 		public int GetCapacity(SlotIdEnum slotId)
 		{
-			return _slotDefinitionList[slotId].Capacity;
+			return _slotDefinitionDictionary[slotId].Capacity;
 		}
 
 		public void AddSlotDefinition(SlotIdEnum slotId, EquipmentSlotDefinition slotDefinition)
 		{
-			_slotDefinitionList.Add(slotId, slotDefinition);
+			_slotDefinitionDictionary.Add(slotId, slotDefinition);
 		}
 
 

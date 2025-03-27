@@ -5,6 +5,8 @@ using InventorySystem.Infrastructure.Events;
 using InventorySystem.Core.Interfaces;
 using InventorySystem.Core.Managers;
 using InventorySystem.UI.Screens.InventoryScreen;
+using InventorySystem.TestsAndSamples;
+using InventorySystem;
 
 namespace InventorySystem.Infrastructure.DI
 {
@@ -15,7 +17,10 @@ namespace InventorySystem.Infrastructure.DI
 		// 2. Override the Configure method
 		protected override void Configure(IContainerBuilder builder)
 		{
-			
+			builder.RegisterBuildCallback(container =>
+			{
+				VContainerUtils.Initialize(container);
+			});
 
 			// Register EventBus as a singleton
 			builder.Register<EventBus>(Lifetime.Singleton)

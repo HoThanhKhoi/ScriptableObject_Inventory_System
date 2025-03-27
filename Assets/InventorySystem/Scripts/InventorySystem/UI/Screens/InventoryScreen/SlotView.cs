@@ -17,6 +17,8 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		private IEventBus _eventBus;
 
+		public EquipmentSlotDefinition EquipmentSlotDefinition => _equipmentSlotDefinition;
+
 		[Inject]
 		public void Construct(IEventBus eventBus)
 		{

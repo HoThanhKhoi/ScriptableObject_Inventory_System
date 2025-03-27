@@ -27,7 +27,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		Dictionary<int, SubSlotView> subSlotButtons = new Dictionary<int, SubSlotView>();
 
 		private SlotModel slotModel;
-		private List<SubSlotModel> subSlotModels = new List<SubSlotModel>();
 
 		private IEventBus _eventBus;
 		private IInventoryService _inventoryService;
@@ -43,12 +42,14 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		private void OnEnable()
 		{
-			_eventBus.Subscribe<OnSlotClickedEvent>(OnItemSelected);
+			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotSelected);
+			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
 		}
 
 		private void OnDisable()
 		{
-			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnItemSelected);
+			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnSlotSelected);
+			_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
 		}
 
 		private void Start()
@@ -57,7 +58,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			CreateSubSlotButtons(maxCapacity);
 		}
 
-		private void OnItemSelected(OnSlotClickedEvent e)
+		private void OnSlotSelected(OnSlotClickedEvent e)
 		{
 			EquipmentSlotDefinition slotDefinition = e.SlotDefinition;
 
@@ -100,7 +101,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 				_rectTransform.anchoredPosition = _currentSubSlotPosition;
 				
 				button.SetActive(false);
-				
+
 				SubSlotView subSlotView = button.GetComponent<SubSlotView>();
 				subSlotButtons.Add(i, subSlotView);
 
@@ -110,6 +111,8 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 					_currentSubSlotPosition.y -= subSlotButtonPadding;
 					_currentSubSlotPosition.x = _initialSubSlotPosition.x;
 				}
+
+				//VContainerUtils.InjectGameObject(subSlotView.gameObject);
 			}
 		}
 

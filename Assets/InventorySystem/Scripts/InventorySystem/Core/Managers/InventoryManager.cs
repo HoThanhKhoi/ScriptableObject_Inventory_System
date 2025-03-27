@@ -14,6 +14,9 @@ namespace InventorySystem.Core.Managers
 	{
 		private readonly IEventBus _eventBus;
 		private readonly Dictionary<SlotIdEnum, SlotModel> _equippedSlots;
+
+		private readonly Dictionary<SubSlotModel, SubSlotModel> _subSlots;
+
 		private readonly List<BaseItem> _allItems;
 		private readonly IEquipmentSlotService _slotService; // We need this to get capacity, etc.
 		

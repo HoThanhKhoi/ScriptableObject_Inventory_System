@@ -1,7 +1,10 @@
+using InventorySystem.Data.Items;
+
 namespace InventorySystem.Infrastructure.Events
 {
 	public struct ItemSelectedEvent
 	{
-		public InventorySystem.Data.Items.BaseItem SelectedItem;
+		public BaseItem SelectedItem;
+
 	}
 }

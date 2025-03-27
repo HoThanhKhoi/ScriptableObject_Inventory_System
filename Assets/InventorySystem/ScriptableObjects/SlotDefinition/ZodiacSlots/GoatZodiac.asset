@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d4c19910b077349a59842a2b7a709f, type: 3}
   m_Name: GoatZodiac
   m_EditorClassIdentifier: 
-  _slotId: 10
-  _allowedCategories: 0a000000
+  _slotId: 11
+  _allowedCategories: 0b000000
   _capacity: 1
