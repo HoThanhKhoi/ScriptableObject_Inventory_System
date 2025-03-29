@@ -67,13 +67,11 @@ public class ItemView : LoopGridViewItem
 
 	public void OnPointerEnterEvent(BaseEventData baseEvent)
 	{
-		Debug.Log("[ItemView]: OnPointerEnterEvent");
 		_eventBus.Publish(new ItemHoveredEvent { SelectedItem = _boundItem });
 	}
 
 	public void OnPointerClickEvent(BaseEventData baseEvent)
 	{
-		Debug.Log("MyInventoryCellUI: OnPointerClickEvent");
 		// Attempt to cast BaseEventData -> PointerEventData
 		PointerEventData eventData = baseEvent as PointerEventData;
 		if (eventData == null)
@@ -84,7 +82,6 @@ public class ItemView : LoopGridViewItem
 		// Now check which mouse button was used
 		if (eventData.button == PointerEventData.InputButton.Left)
 		{
-			Debug.Log("MyInventoryCellUI: Left Click");
 			HandleItemLeftClick(_boundItem);
 		}
 		else if (eventData.button == PointerEventData.InputButton.Right)
@@ -95,17 +92,11 @@ public class ItemView : LoopGridViewItem
 
 	public void HandleItemRightClick(BaseItem clickedItem)
 	{
-		Debug.Log("HandleItemRightClick");
 		//_eventBus.Publish(new OnSubSlotRightClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
 	}
 
 	public void HandleItemLeftClick(BaseItem clickedItem)
 	{
-		Debug.Log("MyInventoryCellUI: HandleItemLeftClick");
 		_eventBus.Publish(new ItemSelectedEvent { SelectedItem = clickedItem });
-
-		//_inventoryService.EquipItem(clickedItem);
-
-		//_eventBus.Publish(new OnSubSlotLeftClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
 	}
 }

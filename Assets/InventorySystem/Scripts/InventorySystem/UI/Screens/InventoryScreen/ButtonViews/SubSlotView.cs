@@ -35,8 +35,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		[Inject]
 		public void Construct(IEventBus eventBus, IInventoryService inventoryService)
 		{
-			Debug.Log("Construct SubSlotView is running");
-
 			if (eventBus != null)
 			{
 				_eventBus = eventBus;
@@ -94,14 +92,11 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		public void HandleSubSlotRightClick()
 		{
-			Debug.Log($"[SubSlotView] Right Clicked item: {SubSlotId}, {SlotId}");
 			_eventBus.Publish(new OnSubSlotRightClickedEvent { SelectedItem = _equippedItem, SlotId = SlotId, SubSlotId = SubSlotId });
 		}
 
 		public void HandleSubSlotLeftClick()
 		{
-			Debug.Log($"[SubSlotView] Left Clicked item: {SubSlotId}, {SlotId}");
-			Debug.Log($"{_inventoryService == null}");
 			_eventBus.Publish(new OnSubSlotLeftClickedEvent { SelectedItem = _equippedItem, SlotId = SlotId, SubSlotId = SubSlotId });
 		}
 

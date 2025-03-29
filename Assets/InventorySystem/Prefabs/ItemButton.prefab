@@ -324,7 +324,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1772238121589494199}
           m_TargetAssemblyTypeName: ItemView, Assembly-CSharp
-          m_MethodName: OnPointerClickEvent
+          m_MethodName: OnPointerEnterEvent
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

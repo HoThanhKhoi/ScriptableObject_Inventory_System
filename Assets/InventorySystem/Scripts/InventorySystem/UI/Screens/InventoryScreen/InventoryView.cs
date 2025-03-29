@@ -71,14 +71,12 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			}
 			if (!isSubSlotClicked)
 			{
-				Debug.Log("Sub Slot is not clicked, return");
 				return;
 			}
 		}
 
 		private void OnSlotClickedEvent(OnSlotClickedEvent e)
 		{
-			Debug.Log($"[InventoryView] Slot Clicked item: {e.SlotDefinition?.name}");
 			if (e.SlotDefinition == null) return;
 
 			EquipmentSlotDefinition equipmentSlotDefinition = _equipmentService.GetSlotDefinitionByIdFromList(e.SlotDefinition.SlotId);
@@ -88,7 +86,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		private void OnSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)
 		{
-			Debug.Log($"[InventoryView] Sub Left Clicked item: {e.SelectedItem?.DisplayName}");
 			if (e.SelectedItem == null) return;
 			ShowItemsByCategory(e.SelectedItem.Category);
 		}
