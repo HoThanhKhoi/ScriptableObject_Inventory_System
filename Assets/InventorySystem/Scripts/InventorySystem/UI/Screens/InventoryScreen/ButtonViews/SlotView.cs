@@ -25,17 +25,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			_eventBus = eventBus;
 		}
 
-		private void Awake()
-		{
-			
-		}
-
-		private void Start()
-		{
-			//_slotButton.onClick.AddListener(HandleSlotClick);
-			//_slotButton.OnPointerUp.AddListener(HandleSlotHovered);
-		}
-
 		public void HandleSlotHovered()
 		{
 			_eventBus.Publish(new OnSlotHoveredEvent { SelectedItem = _equippedItem });
@@ -45,6 +34,5 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		{
 			_eventBus.Publish(new OnSlotClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition});
 		}
-
 	}
 }

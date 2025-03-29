@@ -94,11 +94,11 @@ namespace InventorySystem.Core.Managers
 			if (subSlotId < 0) subSlotId = 0;
 			if (subSlotId >= capacity) subSlotId = capacity - 1;
 
-			// If the sub-slot doesn't exist yet, we expand the list up to subSlotIndex
-			while (slot.EquippedItems.Count <= subSlotId)
-			{
-				slot.EquippedItems.Add(null);
-			}
+			//// If the sub-slot doesn't exist yet, we expand the list up to subSlotIndex
+			//while (slot.EquippedItems.Count <= subSlotId)
+			//{
+			//	slot.EquippedItems.Add(null);
+			//}
 
 			// Override the existing item at subSlotIndex
 			BaseItem oldItem = slot.EquippedItems[subSlotId];
@@ -117,17 +117,17 @@ namespace InventorySystem.Core.Managers
 			_eventBus.Publish(new InventoryUpdatedEvent());
 		}
 
-		public void UnequipItem(SlotIdEnum slotId, int subSlotIndex)
+		public void UnequipItem(SlotIdEnum slotId, int subSlotId)
 		{
 			var slot = GetSlot(slotId);
 			if (slot == null) return;
 
-			if (subSlotIndex < 0 || subSlotIndex >= slot.EquippedItems.Count) return;
+			if (subSlotId < 0 || subSlotId >= slot.EquippedItems.Count) return;
 
-			var oldItem = slot.EquippedItems[subSlotIndex];
+			var oldItem = slot.EquippedItems[subSlotId];
 			if (oldItem == null) return;
 
-			slot.EquippedItems[subSlotIndex] = null;
+			slot.EquippedItems[subSlotId] = null;
 			_eventBus.Publish(new ItemUnequippedEvent { Item = oldItem, SlotId = slotId });
 			_eventBus.Publish(new InventoryUpdatedEvent());
 		}

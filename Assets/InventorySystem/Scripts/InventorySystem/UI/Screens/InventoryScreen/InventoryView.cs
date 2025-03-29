@@ -7,6 +7,7 @@ using InventorySystem.Core.Interfaces;
 using InventorySystem.Data.Enums;
 using System.Linq;
 using InventorySystem.Data;
+using System;
 
 namespace InventorySystem.UI.Screens.InventoryScreen
 {
@@ -33,17 +34,25 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			//_eventBus.Subscribe<OnSlotHoveredEvent>(OnSlotHovered);
 			//_eventBus.Subscribe<OnSubSlotHoveredEvent>(OnSubSlotHovered);
 			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClickedEvent);
+
 			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Subscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
+
 			_eventBus.Subscribe<ItemSelectedEvent>(OnItemSelected);
 
 		}
+
+		
 
 		private void OnDisable()
 		{
 			//_eventBus.Subscribe<OnSlotHoveredEvent>(OnSlotHovered);
 			//_eventBus.Subscribe<OnSubSlotHoveredEvent>(OnSubSlotHovered);
 			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnSlotClickedEvent);
+
 			_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Unsubscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
+
 			_eventBus.Unsubscribe<ItemSelectedEvent>(OnItemSelected);
 		}
 
@@ -52,12 +61,11 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			// Initialize the grid with the current item count
 			if (_loopGridView != null)
 			{
-				// itemTotalCount = _currentItems.Length
-				// onGetItemByRowColumn = OnGetItemByRowColumn
 				_loopGridView.InitGridView(_currentItems.Length, OnGetItemByRowColumn);
 			}
 		}
 
+		// Equip the item
 		private void OnItemSelected(ItemSelectedEvent e)
 		{
 			SlotIdEnum _currentSlotId = _inventoryService.GetCurrentSlotId();
@@ -75,6 +83,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			}
 		}
 
+		// Show items by category
 		private void OnSlotClickedEvent(OnSlotClickedEvent e)
 		{
 			if (e.SlotDefinition == null) return;
@@ -84,11 +93,19 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			ShowItemsByCategory(equipmentSlotDefinition.AllowedCategories[0]);
 		}
 
+		// Show items by category
 		private void OnSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)
 		{
 			if (e.SelectedItem == null) return;
 			ShowItemsByCategory(e.SelectedItem.Category);
 		}
+
+		// Unequip the item
+		private void OnSubSlotRightClicked(OnSubSlotRightClickedEvent e)
+		{
+			_inventoryService.UnequipItem(e.SelectedItem);
+		}
+
 
 		private void ShowItemsByCategory (ItemCategoryEnum category)
 		{

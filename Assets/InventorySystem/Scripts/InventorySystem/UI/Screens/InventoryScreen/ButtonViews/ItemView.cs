@@ -28,23 +28,9 @@ public class ItemView : LoopGridViewItem
 		_inventoryService = inventoryService;
 	}
 
-
-
 	private void Awake()
 	{
 		VContainerUtils.AutoInjectSelf(this);
-	}
-
-	private void OnEnable()
-	{
-	}
-
-	private void OnDisable()
-	{
-	}
-
-	private void Start()
-	{
 	}
 
 	public void Init(BaseItem item, IEventBus eventBus)

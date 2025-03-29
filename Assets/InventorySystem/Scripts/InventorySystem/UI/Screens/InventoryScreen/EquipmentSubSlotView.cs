@@ -44,17 +44,20 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		private void OnEnable()
 		{
 			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClicked);
+
 			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Subscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
+
 			_eventBus.Subscribe<ItemEquippedEvent>(OnItemEquipped);
-
 		}
-
-		
 
 		private void OnDisable()
 		{
 			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnSlotClicked);
+
 			_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Unsubscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
+
 			_eventBus.Unsubscribe<ItemEquippedEvent>(OnItemEquipped);
 		}
 
@@ -62,6 +65,11 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		{
 			_currentSubSlotPosition = _initialSubSlotPosition;
 			CreateSubSlotButtons(maxCapacity);
+		}
+		
+		private void OnSubSlotRightClicked(OnSubSlotRightClickedEvent @event)
+		{
+			throw new NotImplementedException();
 		}
 
 		private void OnSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)
@@ -134,7 +142,5 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 				//VContainerUtils.InjectGameObject(subSlotView.gameObject);
 			}
 		}
-
 	}
-
 }
