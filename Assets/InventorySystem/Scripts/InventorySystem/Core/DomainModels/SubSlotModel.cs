@@ -9,8 +9,9 @@ namespace InventorySystem.Core.DomainModels
 		public SlotIdEnum SlotId;
 		public BaseItem EquippedItem;
 
-		public SubSlotModel(int subSlotId, BaseItem equippedItem)
+		public SubSlotModel(SlotIdEnum slotId, int subSlotId, BaseItem equippedItem)
 		{
+			SlotId = slotId;
 			SubSlotId = subSlotId;
 			EquippedItem = equippedItem;
 		}

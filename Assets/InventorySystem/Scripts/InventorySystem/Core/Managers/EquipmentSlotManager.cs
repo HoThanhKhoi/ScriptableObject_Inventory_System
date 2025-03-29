@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using InventorySystem.Core.DomainModels;
 using InventorySystem.Core.Interfaces;
 using InventorySystem.Data;
@@ -10,64 +11,28 @@ namespace InventorySystem.Core.Managers
 	// Manages slot definitions & restrictions.
 	public class EquipmentSlotManager : IEquipmentSlotService
 	{
-		private readonly Dictionary<SlotIdEnum, EquipmentSlotDefinition> _slotDefinitionDictionary = new Dictionary<SlotIdEnum, EquipmentSlotDefinition>();
+		//private readonly Dictionary<SlotIdEnum, EquipmentSlotDefinition> _slotDefinitionDictionary = new Dictionary<SlotIdEnum, EquipmentSlotDefinition>();
 
-		//public int GetCapacity(string slotId)
-		//{
-		//	if (_slotRestrictions.TryGetValue(slotId, out var restriction))
-		//		return restriction.Capacity;
-		//	return 1; // default
-		//}
-
-		//public bool IsItemAllowedInSlot(ItemCategory category, string slotId)
-		//{
-		//	if (_slotRestrictions.TryGetValue(slotId, out var restriction))
-		//	{
-		//		return restriction.AllowedCategories.Contains(category);
-		//	}
-		//	return false;
-		//}
-
-		//public List<ItemCategory> GetAllowedCategories(string slotId)
-		//{
-		//	if (_slotRestrictions.TryGetValue(slotId, out var restriction))
-		//	{
-		//		return restriction.AllowedCategories;
-		//	}
-		//	return new List<ItemCategory>();
-		//}
-
-		public SlotIdEnum GetSlotId(EquipmentSlotDefinition slotDefinition)
-		{
-			return slotDefinition.SlotId;
-		}
-
-		public List<ItemCategoryEnum> GetAllowedCategories(EquipmentSlotDefinition slotDefinition)
-		{
-			return slotDefinition.AllowedCategories;
-		}
+		private readonly List<EquipmentSlotDefinition> _slotDefinitionList = new List<EquipmentSlotDefinition>();
 
 		public List<ItemCategoryEnum> GetAllowedCategories(SlotIdEnum slotId)
 		{
-			return _slotDefinitionDictionary[slotId].AllowedCategories;
-		}
-		
-
-		public int GetCapacity(EquipmentSlotDefinition slotDefinition)
-		{
-			return slotDefinition.Capacity;
+			return _slotDefinitionList.FirstOrDefault(s => s.SlotId == slotId).AllowedCategories;
 		}
 
 		public int GetCapacity(SlotIdEnum slotId)
 		{
-			return _slotDefinitionDictionary[slotId].Capacity;
+			return _slotDefinitionList.FirstOrDefault(s => s.SlotId == slotId).Capacity;
 		}
 
 		public void AddSlotDefinition(SlotIdEnum slotId, EquipmentSlotDefinition slotDefinition)
 		{
-			_slotDefinitionDictionary.Add(slotId, slotDefinition);
+			_slotDefinitionList.Add(slotDefinition);
 		}
 
-
+		public EquipmentSlotDefinition GetSlotDefinitionByIdFromList(SlotIdEnum slotId)
+		{
+			return _slotDefinitionList.FirstOrDefault(s => s.SlotId == slotId);
+		}
 	}
 }

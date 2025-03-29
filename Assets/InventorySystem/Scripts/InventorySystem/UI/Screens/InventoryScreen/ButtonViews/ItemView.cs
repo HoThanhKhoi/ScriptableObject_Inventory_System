@@ -10,7 +10,7 @@ using InventorySystem.Core.Interfaces;
 using InventorySystem.Data.Enums;
 using static UnityEditor.Progress;
 
-public class MyInventoryCellUI : LoopGridViewItem
+public class ItemView : LoopGridViewItem
 {
 	[SerializeField] private TextMeshProUGUI _itemNameText;
 	[SerializeField] private Image _itemIcon;
@@ -19,8 +19,6 @@ public class MyInventoryCellUI : LoopGridViewItem
 	private BaseItem _boundItem;
 	private IEventBus _eventBus;
 	private IInventoryService _inventoryService;
-	private SlotIdEnum _currentSlotId;
-	private int _currentSubSlotId;
 
 	[Inject]
 	public void Construct(IEventBus eventBus, IInventoryService inventoryService)
@@ -43,8 +41,6 @@ public class MyInventoryCellUI : LoopGridViewItem
 
 	private void OnDisable()
 	{
-		if (_eventBus == null) return;
-		_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(SetSubSlotLeftClicked);
 	}
 
 	private void Start()
@@ -69,9 +65,15 @@ public class MyInventoryCellUI : LoopGridViewItem
 		}
 	}
 
+	public void OnPointerEnterEvent(BaseEventData baseEvent)
+	{
+		Debug.Log("[ItemView]: OnPointerEnterEvent");
+		_eventBus.Publish(new ItemHoveredEvent { SelectedItem = _boundItem });
+	}
+
 	public void OnPointerClickEvent(BaseEventData baseEvent)
 	{
-		Debug.Log("OnPointerClickEvent");
+		Debug.Log("MyInventoryCellUI: OnPointerClickEvent");
 		// Attempt to cast BaseEventData -> PointerEventData
 		PointerEventData eventData = baseEvent as PointerEventData;
 		if (eventData == null)
@@ -82,6 +84,7 @@ public class MyInventoryCellUI : LoopGridViewItem
 		// Now check which mouse button was used
 		if (eventData.button == PointerEventData.InputButton.Left)
 		{
+			Debug.Log("MyInventoryCellUI: Left Click");
 			HandleItemLeftClick(_boundItem);
 		}
 		else if (eventData.button == PointerEventData.InputButton.Right)
@@ -98,31 +101,11 @@ public class MyInventoryCellUI : LoopGridViewItem
 
 	public void HandleItemLeftClick(BaseItem clickedItem)
 	{
-		bool isSubSlotClicked = _inventoryService.GetSubSlotClickedStatus();
-
-		if (isSubSlotClicked)
-		{
-			_inventoryService.EquipItem(clickedItem, _currentSlotId, _currentSubSlotId);
-
-
-			_eventBus.Publish(new ItemSelectedEvent { SelectedItem = clickedItem });
-			Debug.Log($"[MyInventoryCellUI] Item equipped: {clickedItem.DisplayName}");
-			return;
-		}
-		if (!isSubSlotClicked)
-		{
-			Debug.Log("Sub Slot is not clicked, return");
-			return;
-		}
+		Debug.Log("MyInventoryCellUI: HandleItemLeftClick");
+		_eventBus.Publish(new ItemSelectedEvent { SelectedItem = clickedItem });
 
 		//_inventoryService.EquipItem(clickedItem);
 
 		//_eventBus.Publish(new OnSubSlotLeftClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
-	}
-
-	private void SetSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)
-	{
-		_currentSlotId = e.SlotId;
-		_currentSubSlotId = e.SubSlotId;
 	}
 }

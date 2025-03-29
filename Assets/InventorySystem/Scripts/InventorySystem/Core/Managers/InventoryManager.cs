@@ -1,4 +1,3 @@
-// InventoryManager.cs
 using System.Collections.Generic;
 using InventorySystem.Core.Interfaces;
 using InventorySystem.Data.Items;
@@ -7,34 +6,51 @@ using InventorySystem.Core.DomainModels;
 using InventorySystem.Data.Enums;
 using System;
 using System.Diagnostics;
+using System.Linq;
+using InventorySystem.Data;
+using VContainer;
 
 namespace InventorySystem.Core.Managers
 {
 	public class InventoryManager : IInventoryService
 	{
 		private readonly IEventBus _eventBus;
-		private readonly Dictionary<SlotIdEnum, SlotModel> _equippedSlots;
+		//private readonly Dictionary<SlotIdEnum, SlotModel> _equippedSlots;
+		//private readonly Dictionary<(SlotIdEnum, int), SubSlotModel> _subSlotModelDictionary = new Dictionary<(SlotIdEnum, int), SubSlotModel>();
+		// <(slotId, subSlotIndex)>
 
-		private readonly Dictionary<SubSlotModel, SubSlotModel> _subSlots;
+		private readonly List<SlotModel> _equippedSlots;
+		private readonly List<SubSlotModel> _equippedSubSlots;
 
 		private readonly List<BaseItem> _allItems;
 		private readonly IEquipmentSlotService _slotService; // We need this to get capacity, etc.
-		
+
+		private SlotIdEnum _currentSlotId;
+		private int _currentSubSlotId;
 		private bool _onSubSlotClickedStatus;
 
+		
 		public InventoryManager(IEventBus eventBus, IEquipmentSlotService slotService)
 		{
 			_eventBus = eventBus;
 			_slotService = slotService;
-			_equippedSlots = new Dictionary<SlotIdEnum, SlotModel>();
+			_equippedSlots = new List<SlotModel>();
+			_equippedSubSlots = new List<SubSlotModel>();
 			_allItems = new List<BaseItem>();
 		}
 
-		public void InitializeInventory() 
+		public void InitializeInventory()
 		{
-			foreach(SlotIdEnum slotId in Enum.GetValues(typeof(SlotIdEnum)))
+			foreach (SlotIdEnum slotId in Enum.GetValues(typeof(SlotIdEnum)))
 			{
 				GetOrCreateSlot(slotId);
+
+				EquipmentSlotDefinition slotDefinition = _slotService.GetSlotDefinitionByIdFromList(slotId);
+
+				for (int i = 0; i < slotDefinition.Capacity; i++)
+				{
+					GetOrCreateSubSlot(slotId, i);
+				}
 			}
 		}
 
@@ -52,7 +68,7 @@ namespace InventorySystem.Core.Managers
 			if (_allItems.Remove(item))
 			{
 				// If it was equipped, remove it
-				foreach (var slot in _equippedSlots.Values)
+				foreach (SlotModel slot in _equippedSlots)
 				{
 					if (slot.EquippedItems.Contains(item))
 					{
@@ -88,6 +104,8 @@ namespace InventorySystem.Core.Managers
 			BaseItem oldItem = slot.EquippedItems[subSlotId];
 			slot.EquippedItems[subSlotId] = item;
 
+			GetSubSlot(slotId, subSlotId).EquippedItem = item;
+
 			// If oldItem != null, that item is replaced
 			// Publish events
 			if (oldItem != null)
@@ -95,7 +113,7 @@ namespace InventorySystem.Core.Managers
 				_eventBus.Publish(new ItemUnequippedEvent { Item = oldItem, SlotId = slotId });
 			}
 
-			_eventBus.Publish(new ItemEquippedEvent { Item = item, SlotId = slotId });
+			_eventBus.Publish(new ItemEquippedEvent { SubSlotModel = GetSubSlot(slotId, subSlotId) });
 			_eventBus.Publish(new InventoryUpdatedEvent());
 		}
 
@@ -119,26 +137,36 @@ namespace InventorySystem.Core.Managers
 			return _allItems.ToArray();
 		}
 
-
-
 		public SlotModel GetSlot(SlotIdEnum slotId)
 		{
-			if (_equippedSlots == null) return null;
-			if (!_equippedSlots.ContainsKey(slotId)) return null;
-
-			_equippedSlots.TryGetValue(slotId, out SlotModel slot);
-			return slot;
+			return _equippedSlots.FirstOrDefault(s => s.SlotId == slotId);
 		}
 
+		public SubSlotModel GetSubSlot(SlotIdEnum slotId, int subSlotId)
+		{
+			return _equippedSubSlots.FirstOrDefault(s => s.SlotId == slotId && s.SubSlotId == subSlotId);
+		}
 
-
+		
 		// Helper
+		private SubSlotModel GetOrCreateSubSlot(SlotIdEnum slotId, int subSlotId)
+		{
+			SubSlotModel subSlot = GetSubSlot(slotId, subSlotId);
+			if (subSlot == null)
+			{
+				subSlot = new SubSlotModel(slotId, subSlotId, null);
+				_equippedSubSlots.Add(subSlot);
+			}
+			return subSlot;
+		}
+		
 		private SlotModel GetOrCreateSlot(SlotIdEnum slotId)
 		{
-			if (!_equippedSlots.TryGetValue(slotId, out SlotModel slot))
+			SlotModel slot = GetSlot(slotId);
+			if (slot == null)
 			{
 				slot = new SlotModel(slotId);
-				_equippedSlots[slotId] = slot;
+				_equippedSlots.Add(slot);
 			}
 			return slot;
 		}
@@ -147,13 +175,31 @@ namespace InventorySystem.Core.Managers
 		{
 			return _onSubSlotClickedStatus = status;
 		}
-		
+
 		public bool GetSubSlotClickedStatus()
 		{
 			return _onSubSlotClickedStatus;
 		}
 
+		public int GetCurrentSubSlotId()
+		{
+			return _currentSubSlotId;
+		}
 
+		public void SetCurrentSubSlotId(int subSlotId)
+		{
+			_currentSubSlotId = subSlotId;
+		}
+
+		public SlotIdEnum GetCurrentSlotId()
+		{
+			return _currentSlotId;
+		}
+
+		public void SetCurrentSlotId(SlotIdEnum slotId)
+		{
+			_currentSlotId = slotId;
+		}
 
 		//public bool IsEquipped(string slotId)
 		//{

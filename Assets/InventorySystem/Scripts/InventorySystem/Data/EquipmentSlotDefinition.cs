@@ -14,5 +14,14 @@ namespace InventorySystem.Data
 		public SlotIdEnum SlotId => _slotId;
 		public List<ItemCategoryEnum> AllowedCategories => _allowedCategories;
 		public int Capacity => _capacity;
+
+		public EquipmentSlotDefinition Clone()
+		{
+			EquipmentSlotDefinition clone = CreateInstance<EquipmentSlotDefinition>();
+			clone._slotId = _slotId;
+			clone._allowedCategories = new List<ItemCategoryEnum>(_allowedCategories);
+			clone._capacity = _capacity;
+			return clone;
+		}
 	}
 }

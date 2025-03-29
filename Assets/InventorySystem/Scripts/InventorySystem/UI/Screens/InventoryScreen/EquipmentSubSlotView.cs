@@ -4,6 +4,7 @@ using InventorySystem.Data;
 using InventorySystem.Data.Enums;
 using InventorySystem.Infrastructure.Events;
 using SuperScrollView;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -42,14 +43,19 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		private void OnEnable()
 		{
-			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotSelected);
+			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClicked);
 			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Subscribe<ItemEquippedEvent>(OnItemEquipped);
+
 		}
+
+		
 
 		private void OnDisable()
 		{
-			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnSlotSelected);
+			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnSlotClicked);
 			_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Unsubscribe<ItemEquippedEvent>(OnItemEquipped);
 		}
 
 		private void Start()
@@ -58,18 +64,20 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			CreateSubSlotButtons(maxCapacity);
 		}
 
-		private void OnSlotSelected(OnSlotClickedEvent e)
+		private void OnSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)
 		{
-			EquipmentSlotDefinition slotDefinition = e.SlotDefinition;
-
-			slotCapacity = _equipmentService.GetCapacity(slotDefinition);
-
-			SlotIdEnum slotId = _equipmentService.GetSlotId(e.SlotDefinition);
-
+			_inventoryService.SetSubSlotClickedStatus(true);
+			_inventoryService.SetCurrentSubSlotId(e.SubSlotId);
+		}
+		
+		private void OnSlotClicked(OnSlotClickedEvent e)
+		{
 			//Debug.Log($"[EquipmentSubSlotView] Clicked item: " +
 			//	$"{e.SlotDefinition.AllowedCategories[0]}, {e.SlotDefinition.SlotId}, {e.SlotDefinition.Capacity}");
 
-			slotModel = _inventoryService.GetSlot(slotId);
+			slotModel = _inventoryService.GetSlot(e.SlotDefinition.SlotId);
+
+			slotCapacity = _equipmentService.GetCapacity(e.SlotDefinition.SlotId);
 
 			SubSlotView subSlotView;
 
@@ -79,7 +87,10 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 				//Debug.Log($"[EquipmentSubSlotView] Clicked item: {slotModel == null}, {slotModel.SlotId == null}, {subSlotView.SlotId == null}");
 				subSlotView.SetupSubSlot(i, slotModel.SlotId);
-				
+
+				SubSlotModel subSlotModel = _inventoryService.GetSubSlot(slotModel.SlotId, i);
+				subSlotView.UpdateSubSlotItemUI(subSlotModel);
+
 				subSlotView.gameObject.SetActive(true);
 			}
 
@@ -90,12 +101,20 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			}
 		}
 
+		private void OnItemEquipped(ItemEquippedEvent e)
+		{
+			SubSlotModel subSlotModel = _inventoryService.GetSubSlot(e.SubSlotModel.SlotId, e.SubSlotModel.SubSlotId);
+
+			SubSlotView subSlotView = subSlotButtons[e.SubSlotModel.SubSlotId];
+
+			subSlotView.UpdateSubSlotItemUI(subSlotModel);
+		}
+
 		private void CreateSubSlotButtons(int maxCapacity)
 		{
 			for (int i = 0; i < maxCapacity; i++)
 			{
 				GameObject button = Instantiate(subSlotButton, transform);
-				Debug.Log($"[EquipmentSubSlotView] Creating sub slot button: {button == null}");
 				
 				_rectTransform = button.GetComponent<RectTransform>();
 				_rectTransform.anchoredPosition = _currentSubSlotPosition;

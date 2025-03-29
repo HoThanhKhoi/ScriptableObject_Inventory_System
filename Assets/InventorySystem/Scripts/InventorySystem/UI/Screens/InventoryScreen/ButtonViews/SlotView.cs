@@ -46,36 +46,5 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			_eventBus.Publish(new OnSlotClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition});
 		}
 
-		////private void HandleSlotHovered()
-		//{
-		//	//_eventBus.Publish(new OnSlotHoveredEvent { SelectedItem = clickedItem });
-		//}
-
-		//public void Init(string slotId, System.Action<string> onSlotClicked)
-		//{
-		//	_slotId = slotId;
-		//	_onSlotClicked = onSlotClicked;
-		//	if (_slotButton != null)
-		//	{
-		//		_slotButton.OnPointerEnter.AddListener(HandleSlotClick);
-		//	}
-		//}
-
-		//public void SetEquippedItem(BaseItem item)
-		//{
-		//	_equippedItem = item;
-		//	if (_iconImage == null) return;
-
-		//	if (item == null)
-		//	{
-		//		_iconImage.enabled = false;
-		//	}
-		//	else
-		//	{
-		//		_iconImage.enabled = true;
-		//		_iconImage.sprite = item.Icon;
-		//	}
-		//}
-
 	}
 }

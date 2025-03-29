@@ -135,9 +135,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d192895f1cbaa1a4f9cbe6667a0647e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iconImage: {fileID: 2513422249607210315}
   _slotButton: {fileID: 5775413819933311771}
+  _iconImage: {fileID: 2513422249607210315}
   _subSlotText: {fileID: 8456682802669825943}
+  _defaultText: 
+  _defaultIconImage: {fileID: 21300000, guid: ca338bab624f5bf46952f520201c04de, type: 3}
 --- !u!114 &7508659982680474857
 MonoBehaviour:
   m_ObjectHideFlags: 0

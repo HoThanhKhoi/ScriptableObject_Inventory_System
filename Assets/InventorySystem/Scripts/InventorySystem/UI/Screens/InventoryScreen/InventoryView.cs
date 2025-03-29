@@ -6,6 +6,7 @@ using InventorySystem.Infrastructure.Events;
 using InventorySystem.Core.Interfaces;
 using InventorySystem.Data.Enums;
 using System.Linq;
+using InventorySystem.Data;
 
 namespace InventorySystem.UI.Screens.InventoryScreen
 {
@@ -16,12 +17,14 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		private BaseItem[] _currentItems = new BaseItem[0];
 		private IEventBus _eventBus;
 		private IInventoryService _inventoryService;
+		private IEquipmentSlotService _equipmentService;
 
 
 		[Inject]
-		public void Construct(IEventBus eventBus, IInventoryService inventoryService)
+		public void Construct(IEventBus eventBus, IInventoryService inventoryService, IEquipmentSlotService equipmentService)
 		{
 			_inventoryService = inventoryService;
+			_equipmentService = equipmentService;
 			_eventBus = eventBus;
 		}
 
@@ -31,6 +34,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			//_eventBus.Subscribe<OnSubSlotHoveredEvent>(OnSubSlotHovered);
 			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClickedEvent);
 			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Subscribe<ItemSelectedEvent>(OnItemSelected);
 
 		}
 
@@ -38,8 +42,9 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		{
 			//_eventBus.Subscribe<OnSlotHoveredEvent>(OnSlotHovered);
 			//_eventBus.Subscribe<OnSubSlotHoveredEvent>(OnSubSlotHovered);
-			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClickedEvent);
-			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnSlotClickedEvent);
+			_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
+			_eventBus.Unsubscribe<ItemSelectedEvent>(OnItemSelected);
 		}
 
 		private void Start()
@@ -53,25 +58,32 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			}
 		}
 
-		//private void OnSlotHovered(OnSlotHoveredEvent e)
-		//{
-		//	Debug.Log($"[InventoryView] Slot Hovered item: {e.SlotDefinition?.name}");
-		//	if (e.SlotDefinition == null) return;
-		//	ShowItemsByCategory(e.SlotDefinition.AllowedCategories[0]);
-		//}
+		private void OnItemSelected(ItemSelectedEvent e)
+		{
+			SlotIdEnum _currentSlotId = _inventoryService.GetCurrentSlotId();
+			int _currentSubSlotId = _inventoryService.GetCurrentSubSlotId();
+			bool isSubSlotClicked = _inventoryService.GetSubSlotClickedStatus();
 
-		//private void OnSubSlotHovered(OnSubSlotHoveredEvent e)
-		//{
-		//	Debug.Log($"[InventoryView] Sub Hovered item: {e.SelectedItem?.DisplayName}");
-		//	if (e.SelectedItem == null) return;
-		//	ShowItemsByCategory(e.SelectedItem.Category);
-		//}
+			if (isSubSlotClicked)
+			{
+				_inventoryService.EquipItem(e.SelectedItem, _currentSlotId, _currentSubSlotId);
+				return;
+			}
+			if (!isSubSlotClicked)
+			{
+				Debug.Log("Sub Slot is not clicked, return");
+				return;
+			}
+		}
 
 		private void OnSlotClickedEvent(OnSlotClickedEvent e)
 		{
 			Debug.Log($"[InventoryView] Slot Clicked item: {e.SlotDefinition?.name}");
 			if (e.SlotDefinition == null) return;
-			ShowItemsByCategory(e.SlotDefinition.AllowedCategories[0]);
+
+			EquipmentSlotDefinition equipmentSlotDefinition = _equipmentService.GetSlotDefinitionByIdFromList(e.SlotDefinition.SlotId);
+
+			ShowItemsByCategory(equipmentSlotDefinition.AllowedCategories[0]);
 		}
 
 		private void OnSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)
@@ -104,9 +116,9 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			var itemData = _currentItems[index];
 
 			// Create or reuse a cell from the pool
-			// "MyInventoryCellUI" must match the prefab name in ItemPrefabList
-			LoopGridViewItem itemObj = gridView.NewListViewItem("MyInventoryCellUI");
-			var cell = itemObj.GetComponent<MyInventoryCellUI>();
+			// "ItemButton" must match the prefab name in ItemPrefabList
+			LoopGridViewItem itemObj = gridView.NewListViewItem("ItemButton");
+			var cell = itemObj.GetComponent<ItemView>();
 			if (cell != null)
 			{
 				cell.Init(itemData, _eventBus);

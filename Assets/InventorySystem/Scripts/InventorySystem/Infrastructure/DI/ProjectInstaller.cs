@@ -41,8 +41,10 @@ namespace InventorySystem.Infrastructure.DI
 			builder.RegisterComponentInHierarchy<InventoryView>();
 			builder.RegisterComponentInHierarchy<SlotView>();
 			builder.RegisterComponentInHierarchy<EquipmentSubSlotView>();
+			builder.RegisterComponentInHierarchy<CenterView>();
 			builder.RegisterComponentInHierarchy<InventoryAutoPopulator>();
-			
+			builder.RegisterComponentInHierarchy<DescriptionView>();
+
 
 			//builder.RegisterComponentInHierarchy<InventoryMainView>();
 			//builder.RegisterComponentInHierarchy<InventoryLeftPanelView>();

@@ -24,8 +24,17 @@ namespace InventorySystem.Core.Interfaces
 		// For UI to see what's currently equipped
 		SlotModel GetSlot(SlotIdEnum slotId);
 
+		SubSlotModel GetSubSlot(SlotIdEnum slotId, int subSlotId);
+
 		bool SetSubSlotClickedStatus(bool status);
 
 		public bool GetSubSlotClickedStatus();
+
+		public int GetCurrentSubSlotId();
+		public void SetCurrentSubSlotId(int subSlotId);
+
+		public SlotIdEnum GetCurrentSlotId();
+		public void SetCurrentSlotId(SlotIdEnum slotId);
+		
 	}
 }

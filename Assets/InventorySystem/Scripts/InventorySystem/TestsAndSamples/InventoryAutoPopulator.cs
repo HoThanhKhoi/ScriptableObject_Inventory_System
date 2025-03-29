@@ -15,17 +15,18 @@ namespace InventorySystem.TestsAndSamples
 		private Dictionary<SlotIdEnum, EquipmentSlotDefinition> _slotDefinitions;
 
 		private IInventoryService _inventoryService;
-		private IEquipmentSlotService _slotService;
+		private IEquipmentSlotService _slotEquipmentService;
 
 		[Inject]
 		public void Construct(IInventoryService inventoryService, IEquipmentSlotService slotService)
 		{
+			Debug.Log("Construct InventoryAutoPopulator is running");
 			if (inventoryService == null || slotService == null) return;
 			_inventoryService = inventoryService;
-			_slotService = slotService;
+			_slotEquipmentService = slotService;
 
-			_inventoryService.InitializeInventory();
 			InitializeInventoryAutoPopulator();
+			_inventoryService.InitializeInventory();
 		}
 
 		private void OnEnable()
@@ -38,8 +39,8 @@ namespace InventorySystem.TestsAndSamples
 
 		private void InitializeInventoryAutoPopulator()
 		{
-			Debug.Log($"InventoryAutoPopulator: InventoryService: {_inventoryService == null}, SlotService: {_slotService == null}");
-			foreach (var item in _itemsToAdd)
+			Debug.Log($"InventoryAutoPopulator: InventoryService: {_inventoryService == null}, SlotService: {_slotEquipmentService == null}");
+			foreach (BaseItem item in _itemsToAdd)
 			{
 				if (item != null)
 				{
@@ -57,7 +58,7 @@ namespace InventorySystem.TestsAndSamples
 				Debug.Log($"[InventoryAutoPopulator] 2. Slot: {slot.Key}, Definition: {slot.Value}");
 				if (slot.Value != null)
 				{
-					_slotService.AddSlotDefinition(slot.Key, slot.Value);
+					_slotEquipmentService.AddSlotDefinition(slot.Key, slot.Value);
 					Debug.Log($"[InventoryAutoPopulator] 3. Added slot: {slot.Key}");
 				}
 			}
@@ -71,7 +72,7 @@ namespace InventorySystem.TestsAndSamples
 			foreach (SlotView slot in slotViews)
 			{
 				Debug.Log($"[InventoryAutoPopulator] Slot: {slot.EquipmentSlotDefinition.SlotId}, Definition: {slot.EquipmentSlotDefinition}");
-				_slotDefinitions.Add(slot.EquipmentSlotDefinition.SlotId, slot.EquipmentSlotDefinition);
+				_slotDefinitions.Add(slot.EquipmentSlotDefinition.SlotId, slot.EquipmentSlotDefinition.Clone());
 			}
 		}
 	}

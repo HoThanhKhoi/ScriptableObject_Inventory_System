@@ -6,15 +6,12 @@ namespace InventorySystem.Core.Interfaces
 {
 	public interface IEquipmentSlotService
 	{
-		void AddSlotDefinition(SlotIdEnum slotId, EquipmentSlotDefinition slotDefinition);
-		//bool IsItemAllowedInSlot(ItemCategory category, string slotId);
+		public List<ItemCategoryEnum> GetAllowedCategories(SlotIdEnum slotId);
 
-		SlotIdEnum GetSlotId(EquipmentSlotDefinition slotDefinition);
-		
-		int GetCapacity(SlotIdEnum slotId);
-		int GetCapacity(EquipmentSlotDefinition slotDefinition);
-		
-		List<ItemCategoryEnum> GetAllowedCategories(SlotIdEnum slotId);
-		List<ItemCategoryEnum> GetAllowedCategories(EquipmentSlotDefinition slotDefinition);
+		public int GetCapacity(SlotIdEnum slotId);
+
+		public void AddSlotDefinition(SlotIdEnum slotId, EquipmentSlotDefinition slotDefinition);
+
+		public EquipmentSlotDefinition GetSlotDefinitionByIdFromList(SlotIdEnum slotId);
 	}
 }

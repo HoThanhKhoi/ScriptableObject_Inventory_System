@@ -10,15 +10,19 @@ using UnityEngine.EventSystems;
 using InventorySystem.Core.Interfaces;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 namespace InventorySystem.UI.Screens.InventoryScreen
 {
 	// Represents one equip slot in the UI (weapon, consumable, zodiac, etc.).
 	public class SubSlotView : MonoBehaviour
 	{
-		[SerializeField] private Image _iconImage;
 		[SerializeField] private Button _slotButton;
+		[SerializeField] private Image _iconImage;
 		[SerializeField] private TextMeshProUGUI _subSlotText;
+
+		[SerializeField] private string _defaultText;
+		[SerializeField] private Sprite _defaultIconImage;
 
 		private BaseItem _equippedItem;
 		private IEventBus _eventBus;
@@ -36,7 +40,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			if (eventBus != null)
 			{
 				_eventBus = eventBus;
-				_eventBus.Subscribe<ItemSelectedEvent>(SetEquippedItem);
 			}
 
 			if (inventoryService != null)
@@ -53,9 +56,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		private void OnDisable()
 		{
-			Debug.Log("OnDisable SubSlotView is running");
-			if (_eventBus == null) return;
-			_eventBus.Unsubscribe<ItemSelectedEvent>(SetEquippedItem);
+
 		}
 
 		private void Awake()
@@ -65,14 +66,12 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 		private void Start()
 		{
-			//VContainerUtils.AutoInjectSelf(this);
-			//_slotButton.onClick.AddListener(HandleSlotClick);
-			//_slotButton.OnPointerUp.AddListener(HandleSlotHovered);
+
 		}
 
 		public void HandleSubSlotHovered()
 		{
-			//_eventBus.Publish(new OnSubSlotHoveredEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
+			_eventBus.Publish(new OnSubSlotHoveredEvent { SelectedItem = _equippedItem });
 		}
 
 		public void OnPointerClickEvent(BaseEventData baseEvent)
@@ -96,20 +95,13 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		public void HandleSubSlotRightClick()
 		{
 			Debug.Log($"[SubSlotView] Right Clicked item: {SubSlotId}, {SlotId}");
-			//_eventBus.Publish(new OnSubSlotRightClickedEvent { SelectedItem = _equippedItem, SlotDefinition = _equipmentSlotDefinition });
+			_eventBus.Publish(new OnSubSlotRightClickedEvent { SelectedItem = _equippedItem, SlotId = SlotId, SubSlotId = SubSlotId });
 		}
 
 		public void HandleSubSlotLeftClick()
 		{
 			Debug.Log($"[SubSlotView] Left Clicked item: {SubSlotId}, {SlotId}");
 			Debug.Log($"{_inventoryService == null}");
-
-			//if (_eventBus != null)
-			//{
-			//	_eventBus.Subscribe<ItemSelectedEvent>(SetEquippedItem);
-			//}
-
-			_inventoryService.SetSubSlotClickedStatus(true);
 			_eventBus.Publish(new OnSubSlotLeftClickedEvent { SelectedItem = _equippedItem, SlotId = SlotId, SubSlotId = SubSlotId });
 		}
 
@@ -119,7 +111,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			SlotId = slotId;
 		}
 
-		public void UpdateSubSlotUI(SubSlotModel subSlotModel)
+		public void UpdateSubSlotItemUI(SubSlotModel subSlotModel)
 		{
 			_inventoryService.SetSubSlotClickedStatus(false);
 
@@ -130,8 +122,10 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 
 			if (_equippedItem == null)
 			{
-				_subSlotText.enabled = false;
-				_iconImage.enabled = false;
+				_subSlotText.enabled = true;
+				_subSlotText.text = _defaultText;
+				_iconImage.enabled = true;
+				_iconImage.sprite = _defaultIconImage;
 			}
 			else
 			{
@@ -140,13 +134,8 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 				_iconImage.enabled = true;
 				_iconImage.sprite = _equippedItem.Icon;
 			}
-		}
 
-		public void SetEquippedItem(ItemSelectedEvent e)
-		{
-			Debug.Log($"[SubSlotView] SetEquippedItem item: {e.SelectedItem?.DisplayName}");
-			
-			//UpdateSubSlotUI(e.SelectedItem.ItemId);
+			Debug.Log($"[SubSlotView] Item equipped: {subSlotModel == null}, {subSlotModel.EquippedItem == null}, {SlotId == null}");
 		}
 
 
