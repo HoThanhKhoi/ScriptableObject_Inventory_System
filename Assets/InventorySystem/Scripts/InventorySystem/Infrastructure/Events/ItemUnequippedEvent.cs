@@ -6,5 +6,6 @@ namespace InventorySystem.Infrastructure.Events
 	{
 		public Data.Items.BaseItem Item;
 		public SlotIdEnum SlotId;
+		public int SubSlotId;
 	}
 }

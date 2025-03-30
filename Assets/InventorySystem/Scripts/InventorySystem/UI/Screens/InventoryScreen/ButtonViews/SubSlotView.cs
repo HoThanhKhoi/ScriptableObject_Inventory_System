@@ -121,6 +121,8 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 				_subSlotText.text = _defaultText;
 				_iconImage.enabled = true;
 				_iconImage.sprite = _defaultIconImage;
+
+				Debug.Log("SubSlotView: UpdateSubSlotItemUI: _equippedItem == null");
 			}
 			else
 			{
@@ -129,8 +131,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 				_iconImage.enabled = true;
 				_iconImage.sprite = _equippedItem.Icon;
 			}
-
-			Debug.Log($"[SubSlotView] Item equipped: {subSlotModel == null}, {subSlotModel.EquippedItem == null}, {SlotId == null}");
 		}
 
 

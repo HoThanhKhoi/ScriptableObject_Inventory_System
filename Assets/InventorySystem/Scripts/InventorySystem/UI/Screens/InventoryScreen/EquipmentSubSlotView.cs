@@ -46,8 +46,8 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			_eventBus.Subscribe<OnSlotClickedEvent>(OnSlotClicked);
 
 			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
-			_eventBus.Subscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
 
+			_eventBus.Subscribe<ItemUnequippedEvent>(OnItemUnequipped);
 			_eventBus.Subscribe<ItemEquippedEvent>(OnItemEquipped);
 		}
 
@@ -56,8 +56,8 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			_eventBus.Unsubscribe<OnSlotClickedEvent>(OnSlotClicked);
 
 			_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
-			_eventBus.Unsubscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
 
+			_eventBus.Unsubscribe<ItemUnequippedEvent>(OnItemUnequipped);
 			_eventBus.Unsubscribe<ItemEquippedEvent>(OnItemEquipped);
 		}
 
@@ -67,9 +67,14 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			CreateSubSlotButtons(maxCapacity);
 		}
 		
-		private void OnSubSlotRightClicked(OnSubSlotRightClickedEvent @event)
+		private void OnItemUnequipped(ItemUnequippedEvent e)
 		{
-			throw new NotImplementedException();
+			SubSlotModel subSlotModel = _inventoryService.GetSubSlot(e.SlotId, e.SubSlotId);
+			SubSlotView subSlotView = subSlotButtons[e.SubSlotId];
+			subSlotView.UpdateSubSlotItemUI(subSlotModel);
+
+			Debug.Log($"[EquipmentSubSlotView] Item unequipped: {e.Item?.name}, {e.SlotId}, {e.SubSlotId}");
+			Debug.Log($"[EquipmentSubSlotView] Item unequipped:  {subSlotModel?.SlotId}, {subSlotModel?.SubSlotId}, {subSlotModel?.EquippedItem}");
 		}
 
 		private void OnSubSlotLeftClicked(OnSubSlotLeftClickedEvent e)

@@ -83,6 +83,12 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			}
 		}
 
+		// Unequip the item
+		private void OnSubSlotRightClicked(OnSubSlotRightClickedEvent e)
+		{
+			_inventoryService.UnequipItem(e.SlotId, e.SubSlotId);
+		}
+
 		// Show items by category
 		private void OnSlotClickedEvent(OnSlotClickedEvent e)
 		{
@@ -98,12 +104,6 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 		{
 			if (e.SelectedItem == null) return;
 			ShowItemsByCategory(e.SelectedItem.Category);
-		}
-
-		// Unequip the item
-		private void OnSubSlotRightClicked(OnSubSlotRightClickedEvent e)
-		{
-			_inventoryService.UnequipItem(e.SelectedItem);
 		}
 
 
@@ -132,7 +132,7 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			// Create or reuse a cell from the pool
 			// "ItemButton" must match the prefab name in ItemPrefabList
 			LoopGridViewItem itemObj = gridView.NewListViewItem("ItemButton");
-			var cell = itemObj.GetComponent<ItemView>();
+			ItemView cell = itemObj.GetComponent<ItemView>();
 			if (cell != null)
 			{
 				cell.Init(itemData, _eventBus);

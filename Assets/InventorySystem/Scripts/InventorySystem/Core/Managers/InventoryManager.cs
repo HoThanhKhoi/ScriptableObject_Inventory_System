@@ -22,6 +22,8 @@ namespace InventorySystem.Core.Managers
 		private readonly List<SlotModel> _equippedSlots;
 		private readonly List<SubSlotModel> _equippedSubSlots;
 
+		private readonly Dictionary<BaseItem, (SlotIdEnum slotId, int subSlotId)> _equippedItemMap;
+
 		private readonly List<BaseItem> _allItems;
 		private readonly IEquipmentSlotService _slotService; // We need this to get capacity, etc.
 
@@ -37,6 +39,7 @@ namespace InventorySystem.Core.Managers
 			_equippedSlots = new List<SlotModel>();
 			_equippedSubSlots = new List<SubSlotModel>();
 			_allItems = new List<BaseItem>();
+			_equippedItemMap = new Dictionary<BaseItem, (SlotIdEnum slotId, int subSlotId)>();
 		}
 
 		public void InitializeInventory()
@@ -84,6 +87,11 @@ namespace InventorySystem.Core.Managers
 		// Overload for multi-sub-slot
 		public void EquipItem(BaseItem item, SlotIdEnum slotId, int subSlotId)
 		{
+			if (_equippedItemMap.TryGetValue(item, out var oldLocation))
+			{
+				// If the item is already equipped, we unequip it first
+				UnequipItem(oldLocation.slotId, oldLocation.subSlotId);
+			}
 			//if (!CanEquipItem(item, slotId)) return;
 
 			SlotModel slot = GetOrCreateSlot(slotId);
@@ -95,23 +103,25 @@ namespace InventorySystem.Core.Managers
 			if (subSlotId >= capacity) subSlotId = capacity - 1;
 
 			//// If the sub-slot doesn't exist yet, we expand the list up to subSlotIndex
-			//while (slot.EquippedItems.Count <= subSlotId)
-			//{
-			//	slot.EquippedItems.Add(null);
-			//}
+			while (slot.EquippedItems.Count <= subSlotId)
+			{
+				slot.EquippedItems.Add(null);
+			}
 
 			// Override the existing item at subSlotIndex
 			BaseItem oldItem = slot.EquippedItems[subSlotId];
 			slot.EquippedItems[subSlotId] = item;
-
 			GetSubSlot(slotId, subSlotId).EquippedItem = item;
 
 			// If oldItem != null, that item is replaced
 			// Publish events
 			if (oldItem != null)
 			{
+				_equippedItemMap.Remove(oldItem);
 				_eventBus.Publish(new ItemUnequippedEvent { Item = oldItem, SlotId = slotId });
 			}
+
+			_equippedItemMap[item] = (slotId, subSlotId);
 
 			_eventBus.Publish(new ItemEquippedEvent { SubSlotModel = GetSubSlot(slotId, subSlotId) });
 			_eventBus.Publish(new InventoryUpdatedEvent());
@@ -119,16 +129,21 @@ namespace InventorySystem.Core.Managers
 
 		public void UnequipItem(SlotIdEnum slotId, int subSlotId)
 		{
-			var slot = GetSlot(slotId);
+			SlotModel slot = GetSlot(slotId);
 			if (slot == null) return;
 
 			if (subSlotId < 0 || subSlotId >= slot.EquippedItems.Count) return;
 
-			var oldItem = slot.EquippedItems[subSlotId];
+			BaseItem oldItem = slot.EquippedItems[subSlotId];
 			if (oldItem == null) return;
 
 			slot.EquippedItems[subSlotId] = null;
-			_eventBus.Publish(new ItemUnequippedEvent { Item = oldItem, SlotId = slotId });
+			GetSubSlot(slotId, subSlotId).EquippedItem = null;
+
+			_equippedItemMap.Remove(oldItem);
+
+			slot.EquippedItems[subSlotId] = null;
+			_eventBus.Publish(new ItemUnequippedEvent { Item = oldItem, SlotId = slotId, SubSlotId = subSlotId });
 			_eventBus.Publish(new InventoryUpdatedEvent());
 		}
 
