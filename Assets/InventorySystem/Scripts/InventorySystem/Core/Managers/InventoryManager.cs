@@ -15,9 +15,6 @@ namespace InventorySystem.Core.Managers
 	public class InventoryManager : IInventoryService
 	{
 		private readonly IEventBus _eventBus;
-		//private readonly Dictionary<SlotIdEnum, SlotModel> _equippedSlots;
-		//private readonly Dictionary<(SlotIdEnum, int), SubSlotModel> _subSlotModelDictionary = new Dictionary<(SlotIdEnum, int), SubSlotModel>();
-		// <(slotId, subSlotIndex)>
 
 		private readonly List<SlotModel> _equippedSlots;
 		private readonly List<SubSlotModel> _equippedSubSlots;
@@ -214,6 +211,16 @@ namespace InventorySystem.Core.Managers
 		public void SetCurrentSlotId(SlotIdEnum slotId)
 		{
 			_currentSlotId = slotId;
+		}
+
+		public List<BaseItem> GetAllEquippedItems(SlotIdEnum slotId)
+		{
+			return _equippedItemMap.Where(x => x.Value.slotId == slotId).Select(x => x.Key).ToList();
+		}
+
+		public bool IsItemEquipped(BaseItem item) 
+		{ 
+			return item != null && _equippedItemMap.ContainsKey(item); 
 		}
 
 		//public bool IsEquipped(string slotId)

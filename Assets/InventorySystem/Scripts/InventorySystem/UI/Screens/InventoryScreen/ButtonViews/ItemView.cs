@@ -15,8 +15,11 @@ public class ItemView : LoopGridViewItem
 	[SerializeField] private TextMeshProUGUI _itemNameText;
 	[SerializeField] private Image _itemIcon;
 	[SerializeField] private Button _cellButton;
+	[SerializeField] private GameObject _equippedIndicator;
 
 	private BaseItem _boundItem;
+	public BaseItem BoundItem => _boundItem;
+
 	private IEventBus _eventBus;
 	private IInventoryService _inventoryService;
 
@@ -84,5 +87,11 @@ public class ItemView : LoopGridViewItem
 	public void HandleItemLeftClick(BaseItem clickedItem)
 	{
 		_eventBus.Publish(new ItemSelectedEvent { SelectedItem = clickedItem });
+	}
+
+	public void ShowAndHideEquippedIndicator(bool isActive)
+	{
+		if (_equippedIndicator == null) return;
+		_equippedIndicator.SetActive(isActive);
 	}
 }

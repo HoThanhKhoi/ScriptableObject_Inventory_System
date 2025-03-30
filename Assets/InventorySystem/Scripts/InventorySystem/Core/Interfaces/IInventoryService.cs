@@ -1,6 +1,7 @@
 using InventorySystem.Core.DomainModels;
 using InventorySystem.Data.Enums;
 using InventorySystem.Data.Items;
+using System.Collections.Generic;
 
 namespace InventorySystem.Core.Interfaces
 {
@@ -35,6 +36,9 @@ namespace InventorySystem.Core.Interfaces
 
 		public SlotIdEnum GetCurrentSlotId();
 		public void SetCurrentSlotId(SlotIdEnum slotId);
-		
+
+		public List<BaseItem> GetAllEquippedItems(SlotIdEnum slotId);
+
+		public bool IsItemEquipped(BaseItem item);
 	}
 }

@@ -38,11 +38,11 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			_eventBus.Subscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
 			_eventBus.Subscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
 
+			_eventBus.Subscribe<ItemEquippedEvent>(OnItemEquipped);
+			_eventBus.Subscribe<ItemUnequippedEvent>(OnItemUnequipped);
 			_eventBus.Subscribe<ItemSelectedEvent>(OnItemSelected);
 
 		}
-
-		
 
 		private void OnDisable()
 		{
@@ -53,8 +53,12 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			_eventBus.Unsubscribe<OnSubSlotLeftClickedEvent>(OnSubSlotLeftClicked);
 			_eventBus.Unsubscribe<OnSubSlotRightClickedEvent>(OnSubSlotRightClicked);
 
+			_eventBus.Unsubscribe<ItemEquippedEvent>(OnItemEquipped);
+			_eventBus.Unsubscribe<ItemUnequippedEvent>(OnItemUnequipped);
 			_eventBus.Unsubscribe<ItemSelectedEvent>(OnItemSelected);
 		}
+
+		
 
 		private void Start()
 		{
@@ -106,6 +110,35 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			ShowItemsByCategory(e.SelectedItem.Category);
 		}
 
+		private void OnItemEquipped(ItemEquippedEvent e)
+		{
+			RefreshEquippedIndication();
+		}
+
+		private void OnItemUnequipped(ItemUnequippedEvent e)
+		{
+			RefreshEquippedIndication();
+		}
+
+		private void RefreshEquippedIndication()
+		{
+			// Iterate over all current items. Only visible items will be updated.
+			for (int i = 0; i < _currentItems.Length; i++)
+			{
+				// Get the cell if it is currently visible.
+				LoopGridViewItem gridItem = _loopGridView.GetShownItemByItemIndex(i);
+				if (gridItem != null)
+				{
+					ItemView cell = gridItem.GetComponent<ItemView>();
+					if (cell != null)
+					{
+						// Query the inventory service to check if the item bound to this cell is equipped.
+						bool isEquipped = _inventoryService.IsItemEquipped(cell.BoundItem);
+						cell.ShowAndHideEquippedIndicator(isEquipped);
+					}
+				}
+			}
+		}
 
 		private void ShowItemsByCategory (ItemCategoryEnum category)
 		{
@@ -136,10 +169,19 @@ namespace InventorySystem.UI.Screens.InventoryScreen
 			if (cell != null)
 			{
 				cell.Init(itemData, _eventBus);
+
+				bool isEquipped = _inventoryService.IsItemEquipped(itemData);
+				cell.ShowAndHideEquippedIndicator(isEquipped);
 			}
+
+			Debug.Log($"[InventoryView] OnGetItemByRowColumn: index: {index}, row: {row}, column: {column}");
 
 			return itemObj;
 		}
-	}
 
+		private int GetEquippedItemIndex(BaseItem item)
+		{
+			return Array.IndexOf(_currentItems, item);
+		}
+	}
 }
